@@ -55,12 +55,6 @@ class Player(pygame.sprite.Sprite):
         # equations of motion
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
-        # wrap around the sides of the screen
-        if self.pos.x > WIDTH:
-            self.pos.x = 0
-        if self.pos.x < 0:
-            self.pos.x = WIDTH
-
         self.rect.midbottom = self.pos
 
         # Set the Player Sprite Animation Stopped
@@ -75,7 +69,14 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((w, h))
-        self.image.fill(RED)
+        self.image = pygame.image.load("sprites/platform.png")
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+class Background(pygame.sprite.Sprite):
+    def __init__(self, image_file, location):
+        pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
+        self.image = pygame.image.load(image_file)
+        self.rect = self.image.get_rect()
+        self.rect.left, self.rect.top = location
