@@ -1,3 +1,22 @@
+"""
+    A simple Game to test neural networks , machine learning etc
+
+    Copyright (C) 2017  Tiago Martins
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
 import pygame
 from settings import *
 vec = pygame.math.Vector2
@@ -7,7 +26,7 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         # Pass a game instance of our Game Class for player to has access of the Game vars/funcs etc
         self.game = game
-        self.image = pygame.image.load("sprites/right_1.png")
+        self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
         self.pos = vec(WIDTH / 2, HEIGHT / 2)
@@ -23,9 +42,13 @@ class Player(pygame.sprite.Sprite):
         # jump only if standing on a platform
         self.rect.x += 1
         hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
+        hits_base = pygame.sprite.spritecollide(self, self.game.base, False)
         self.rect.x -= 1
         if hits:
             self.vel.y = -20
+        elif hits_base:
+            self.vel.y = -20
+
 
     def update(self):
         # Update Sprites on the screen
@@ -56,27 +79,34 @@ class Player(pygame.sprite.Sprite):
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.midbottom = self.pos
-
         # Set the Player Sprite Animation Stopped
         if self.vel.x == 0:
             if self.direc == 'left':
-                self.image = pygame.image.load("sprites/left_1.png")
+                self.image = pygame.image.load(PLAYER_IMAGE_LIST_LEFT[1])
             elif self.direc == 'right':
-                self.image = pygame.image.load("sprites/right_1.png")
+                self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
 
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((w, h))
-        self.image = pygame.image.load("sprites/platform.png")
+        self.image = pygame.image.load(PLATFORMS[0]).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
 
+class Base(pygame.sprite.Sprite):
+    def __init__(self,image_file,x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((WIDTH, 71))
+        self.image = pygame.image.load(image_file).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_file, location):
         pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
-        self.image = pygame.image.load(image_file)
+        self.image = pygame.image.load(image_file).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
