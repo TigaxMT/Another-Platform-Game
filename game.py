@@ -13,19 +13,21 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.pause = False
+        self.plat_base = []
 
     def new(self):
         # start a new game
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
+        self.background = Background("sprites/BG.png", [0,0])
         self.player = Player(self)
+        self.all_sprites.add(self.background)
         self.all_sprites.add(self.player)
-        # Randomize platforms
-        rand_platforms()
+
         for plat in PLATFORM_LIST:
-            p = Platform(plat[0],plat[1],plat[2],plat[3])
-            self.all_sprites.add(p)
-            self.platforms.add(p)
+            self.plat_base = Platform(plat[0],plat[1],plat[2],plat[3])
+            self.all_sprites.add(self.plat_base)
+            self.platforms.add(self.plat_base)
         self.run()
 
     def run(self):
@@ -47,6 +49,28 @@ class Game:
                 self.player.pos.y = hits[0].rect.top
                 self.player.vel.y = 0
 
+        # if player reaches 1/4 left sof screen
+
+        if self.player.pos.x <= 0:
+            self.player.pos.x = 0
+
+        if self.player.rect.right >= WIDTH / 4:
+
+            for plat in self.platforms:
+                if self.player.vel.x > 0:
+                    plat.rect.x -= self.player.vel.x
+                if plat.rect.right <= 250:
+                    plat.kill()
+        while len(self.platforms) < 5:
+            p = Platform(random.randrange(0, WIDTH - 40),
+                         random.randrange(0, HEIGHT - 40),
+                         195, 71)
+            self.platforms.add(p)
+            self.all_sprites.add(p)
+
+        if self.player.rect.bottom >= HEIGHT:
+            self.game_over()
+
     def events(self):
         # Game Loop - events
         for event in pygame.event.get():
@@ -64,10 +88,10 @@ class Game:
 
     def draw(self):
         # Game Loop - draw
-        self.screen.fill(LIGHTBLUE)
+        self.screen.fill(WHITE)
         self.all_sprites.draw(self.screen)
         # after drawing everything, flip the display
-        pygame.display.flip()
+        pygame.display.update()
 
     def text_objects(self,text, font):
         # Creates Text Messages
@@ -140,6 +164,30 @@ class Game:
                     quit()
 
             self.button("Continue",150,450,100,50,GREEN,BRIGHT_GREEN,self.unpause)
+            self.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.show_start_screen)
+
+            pygame.display.update()
+            self.clock.tick(15)
+
+    def game_over(self):
+        #pygame.mixer.Sound.play(crash_sound)
+        pygame.mixer.music.stop()
+
+        self.screen.fill(WHITE)
+
+        largeText = pygame.font.SysFont("comicsansms",115)
+        TextSurf, TextRect = self.text_objects("You Died!", largeText)
+        TextRect.center = ((WIDTH/2),(HEIGHT/2))
+        self.screen.blit(TextSurf, TextRect)
+
+        while True:
+            for event in pygame.event.get():
+                #print(event)
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            self.button("Play Again",150,450,100,50,GREEN,BRIGHT_GREEN,self.new)
             self.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.show_start_screen)
 
             pygame.display.update()
