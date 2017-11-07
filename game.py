@@ -1,3 +1,21 @@
+"""
+    A simple Game to test neural networks , machine learning etc
+
+    Copyright (C) 2017  Tiago Martins
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import pygame
 import random
 from settings import *
@@ -13,21 +31,19 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.pause = False
-        self.plat_base = []
 
     def new(self):
         # start a new game
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
-        self.background = Background("sprites/BG.png", [0,0])
+        self.background = Background(BG[0], [0,0])
+        self.base = pygame.sprite.Group()
+        b = Base(BASE[0],0 , HEIGHT-71)
+        self.base.add(b)
         self.player = Player(self)
         self.all_sprites.add(self.background)
         self.all_sprites.add(self.player)
-
-        for plat in PLATFORM_LIST:
-            self.plat_base = Platform(plat[0],plat[1],plat[2],plat[3])
-            self.all_sprites.add(self.plat_base)
-            self.platforms.add(self.plat_base)
+        self.all_sprites.add(self.base)
         self.run()
 
     def run(self):
@@ -42,29 +58,40 @@ class Game:
     def update(self):
         # Game Loop - Update
         self.all_sprites.update()
+
         # check if player hits a platform when it's falling
         if self.player.vel.y > 0:
             hits = pygame.sprite.spritecollide(self.player, self.platforms, False)
+            hits_base = pygame.sprite.spritecollide(self.player, self.base, False)
             if hits:
                 self.player.pos.y = hits[0].rect.top
                 self.player.vel.y = 0
 
+            elif hits_base:
+                self.player.pos.y = hits_base[0].rect.top
+                self.player.vel.y = 0
+
         # if player reaches 1/4 left sof screen
+
+        keys = pygame.key.get_pressed()
 
         if self.player.pos.x <= 0:
             self.player.pos.x = 0
 
-        if self.player.rect.right >= WIDTH / 4:
+        if self.player.rect.right >= (WIDTH - 250):
+            self.player.pos.x -= abs(self.player.vel.x)
 
-            for plat in self.platforms:
-                if self.player.vel.x > 0:
-                    plat.rect.x -= self.player.vel.x
-                if plat.rect.right <= 250:
-                    plat.kill()
-        while len(self.platforms) < 5:
-            p = Platform(random.randrange(0, WIDTH - 40),
-                         random.randrange(0, HEIGHT - 40),
-                         195, 71)
+            # Only if the player moves to right platforms move
+            if keys[pygame.K_RIGHT]:
+                for plat in self.platforms:
+                    if self.player.vel.x > 0:
+                        plat.rect.x -= abs(self.player.vel.x )
+                    if plat.rect.right < 0:
+                        plat.kill()
+        while len(self.platforms) < 1:
+            p = Platform(random.randrange(0, WIDTH),
+                            random.randrange(HEIGHT / 2,  HEIGHT - (71+71)),
+                            195, 71)
             self.platforms.add(p)
             self.all_sprites.add(p)
 
