@@ -88,6 +88,18 @@ class Game:
                         plat.rect.x -= abs(self.player.vel.x )
                     if plat.rect.right < 0:
                         plat.kill()
+
+                for bases in self.base:
+                    if self.player.vel.x > 0:
+                        bases.rect.x -= abs(self.player.vel.x )
+                    while len(self.base) < 2:
+                        if bases.rect.right <= WIDTH:
+                            b = Base(BASE[0], WIDTH , HEIGHT - 71)
+                            self.base.add(b)
+                            self.all_sprites.add(b)
+                    if bases.rect.right < 0:
+                        bases.kill()
+
         while len(self.platforms) < 1:
             p = Platform(random.randrange(0, WIDTH),
                             random.randrange(HEIGHT / 2,  HEIGHT - (71+71)),
@@ -110,8 +122,11 @@ class Game:
                 if event.key == pygame.K_SPACE:
                     self.player.jump()
                 if event.key == pygame.K_ESCAPE:
-                    self.pause = True
-                    self.paused()
+                    if self.pause == True:
+                        self.unpause()
+                    elif self.pause == False:
+                        self.pause = True
+                        self.paused()
 
     def draw(self):
         # Game Loop - draw
@@ -148,11 +163,9 @@ class Game:
 
     def show_start_screen(self):
         # game splash/start screen
-        start_screen = True
 
-        while start_screen:
+        while True:
             for event in pygame.event.get():
-                #print(event)
                 if event.type == pygame.QUIT:
                     self.running = False
                     self.quit_game()
@@ -189,6 +202,10 @@ class Game:
                     self.running = False
                     pygame.quit()
                     quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        if self.pause == True:
+                            self.unpause()
 
             self.button("Continue",150,450,100,50,GREEN,BRIGHT_GREEN,self.unpause)
             self.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.show_start_screen)

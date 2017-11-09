@@ -24,7 +24,7 @@ vec = pygame.math.Vector2
 class Player(pygame.sprite.Sprite):
     def __init__(self, game):
         pygame.sprite.Sprite.__init__(self)
-        # Pass a game instance of our Game Class for player to has access of the Game vars/funcs etc
+        # Pass a game instance of Game Class for player to has access of the Game vars/funcs etc
         self.game = game
         self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
         self.rect = self.image.get_rect()
