@@ -6,8 +6,14 @@ In Future the game will be an endless run RPG game, with mobs and score. And wil
 
 #### For Now
 
-* Add base_platform sprite movement
+* Improve base_platform sprite movement
 * Improve the platform collision
+* Draw a better sprite player with a sword
+* Draw the sprite player sword atack
+* Add new sound effects for jump , walk , atack etc
+* Improve the code for better performance
+* Add assets like trees , stones , bush etc to the environment
+* Improve the credits screen
 
 # Compiling
 
@@ -40,6 +46,8 @@ If you use pyton2:
 # Credits
 
 * Programmers: Tiago Martins([TigaxMT](https://github.com/TigaxMT "TigaxMT Profile")) & Kelvin Ferreira([k30v1n](https://github.com/k30v1n "k30v1n Profile"))
+
+* Sounds: Bruna Silva(Girlfriend of Tiago Martins)
 
 * Design: Zuhria Alfitra a.k.a pzUH - http://www.gameart2d.com/free-platformer-game-tileset.html
           Tiago Martins (only the person design)
