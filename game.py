@@ -27,6 +27,8 @@ class Game:
         pygame.init()
         pygame.mixer.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        imgIcon = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[2]).convert_alpha()
+        pygame.display.set_icon(imgIcon)
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
         self.running = True
@@ -235,6 +237,11 @@ class Game:
                 height += 100
                 TextRect.center = ((350),(height))
                 self.screen.blit(TextSurf, TextRect)
+
+            largeText = pygame.font.SysFont(None,30)
+            TextSurf, TextRect = self.text_objects(" Copyright © 2017  Tiago Martins", largeText)
+            TextRect.center = ((WIDTH/2),(HEIGHT - 200))
+            self.screen.blit(TextSurf, TextRect)
 
             self.button("Main Menu",((WIDTH - 150)/2),(HEIGHT - 100),100,50,BLUE,LIGHTBLUE,self.show_start_screen)
             pygame.display.flip()
