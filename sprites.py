@@ -24,7 +24,7 @@ vec = pygame.math.Vector2
 class Player(pygame.sprite.Sprite):
     def __init__(self, game):
         pygame.sprite.Sprite.__init__(self)
-        # Pass a game instance of our Game Class for player to has access of the Game vars/funcs etc
+        # Pass a game instance of Game Class for player to has access of the Game vars/funcs etc
         self.game = game
         self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
         self.rect = self.image.get_rect()
@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
             # Verify if is the last image of the sprite animation, if it was restart the counter
             if self.counter_left == 2:
                 self.counter_left = 0
-            self.image = pygame.image.load(PLAYER_IMAGE_LIST_LEFT[self.counter_left])
+            self.image = pygame.image.load(PLAYER_IMAGE_LIST_LEFT[self.counter_left]).convert_alpha()
             self.acc.x = -PLAYER_ACC
             self.counter_left += 1
             self.direc = 'left'
@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):
             # Verify if is the last image of the sprite animation, if it was restart the counter
             if self.counter_right == 2:
                 self.counter_right = 0
-            self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[self.counter_right])
+            self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[self.counter_right]).convert_alpha()
             self.acc.x = PLAYER_ACC
             self.counter_right += 1
             self.direc = 'right'
