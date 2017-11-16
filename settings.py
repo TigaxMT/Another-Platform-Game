@@ -44,6 +44,7 @@ PLAYER_IMAGE_LIST_LEFT = ["sprites/left_0.png","sprites/left_1.png","sprites/lef
 PLAYER_IMAGE_LIST_RIGHT = ["sprites/right_0.png","sprites/right_1.png","sprites/right_2.png"]
 BG = ["sprites/BG.png"]
 PLATFORMS = ["sprites/platform.png"]
+ASSETS = ["sprites/Tree_2.png","sprites/Tree_3.png"]
 BASE = ["sprites/base.png"]
 
 # Credits
