@@ -109,7 +109,7 @@ class Game:
                     #Randomize base platforms
                     while len(self.base) < 2:
                         if bases.rect.right <= WIDTH:
-                            b = Base(BASE[0], WIDTH , HEIGHT - 71)
+                            b = Base(BASE[0], random.randrange(WIDTH,WIDTH + 50) , HEIGHT - 71)
                             self.base.add(b)
                             self.all_sprites.add(b)
 
@@ -123,14 +123,19 @@ class Game:
         # Randomize assets
         while len(self.assets) < 2:
             n_img = random.randrange(0,len(ASSETS))
-            a = Asset(ASSETS[n_img],random.randrange(WIDTH,WIDTH+250),HEIGHT - (71+71))
+            
+            #Load the image the Asset class will load to get the height for spawn correctly the assets
+            img = pygame.image.load(ASSETS[n_img]).convert_alpha()
+            height_img = img.get_size()[1]
+
+            a = Asset(ASSETS[n_img],random.randrange(WIDTH,WIDTH+250),HEIGHT - (height_img+71))
             self.assets.add(a)
             self.all_sprites.add(a)
 
         # If player fall down
         if self.player.rect.bottom >= HEIGHT:
             self.game_over()
-
+    
     def events(self):
         # Game Loop - events
         for event in pygame.event.get():
@@ -261,7 +266,7 @@ class Game:
             height = 0
 
     # ---------------- Other Functions ----------------
-
+    
     def unpause(self):
         # Unpause the game
         self.pause = False
