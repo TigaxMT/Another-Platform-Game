@@ -40,6 +40,7 @@ class Game:
         pygame.mixer.music.play(-1)
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
+        self.assets = pygame.sprite.Group()
         self.background = Background(BG[0], [0,0])
         self.base = pygame.sprite.Group()
         b = Base(BASE[0],0 , HEIGHT-71)
@@ -85,13 +86,19 @@ class Game:
         if self.player.rect.right >= (WIDTH - 250):
             self.player.pos.x -= abs(self.player.vel.x)
 
-            # Only if the player moves to right platforms move
+            # Only if the player moves to right platforms and assets move
             if keys[pygame.K_RIGHT]:
                 for plat in self.platforms:
                     if self.player.vel.x > 0:
                         plat.rect.x -= abs(self.player.vel.x )
                     if plat.rect.right < 0:
                         plat.kill()
+
+                for ass in self.assets:
+                    if self.player.vel.x > 0:
+                        ass.rect.x -= abs(self.player.vel.x )
+                    if ass.rect.right < 0:
+                        ass.kill()
 
                 # Give the base platform movement for each platform
                 for bases in self.base:
@@ -102,22 +109,33 @@ class Game:
                     #Randomize base platforms
                     while len(self.base) < 2:
                         if bases.rect.right <= WIDTH:
-                            b = Base(BASE[0], WIDTH , HEIGHT - 71)
+                            b = Base(BASE[0], random.randrange(WIDTH,WIDTH + 50) , HEIGHT - 71)
                             self.base.add(b)
                             self.all_sprites.add(b)
 
         # Randomize platforms
         while len(self.platforms) < 1:
-            p = Platform(random.randrange(0, WIDTH),
+            p = Platform(random.randrange(WIDTH, WIDTH+250),
                             random.randrange(HEIGHT / 2,  HEIGHT - (71+71)),
                             195, 71)
             self.platforms.add(p)
             self.all_sprites.add(p)
+        # Randomize assets
+        while len(self.assets) < 2:
+            n_img = random.randrange(0,len(ASSETS))
+            
+            #Load the image the Asset class will load to get the height for spawn correctly the assets
+            img = pygame.image.load(ASSETS[n_img]).convert_alpha()
+            height_img = img.get_size()[1]
+
+            a = Asset(ASSETS[n_img],random.randrange(WIDTH,WIDTH+250),HEIGHT - (height_img+71))
+            self.assets.add(a)
+            self.all_sprites.add(a)
 
         # If player fall down
         if self.player.rect.bottom >= HEIGHT:
             self.game_over()
-
+    
     def events(self):
         # Game Loop - events
         for event in pygame.event.get():
@@ -248,7 +266,7 @@ class Game:
             height = 0
 
     # ---------------- Other Functions ----------------
-
+    
     def unpause(self):
         # Unpause the game
         self.pause = False

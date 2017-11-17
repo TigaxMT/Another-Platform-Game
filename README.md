@@ -23,7 +23,7 @@ You need to have installed python3.x or python2.x
 
 Open a terminal and wirte the next commands:
 
-* Ubuntu: ` sudo apt install python3`
+* Ubuntu: ` sudo apt install python3 python3-pip`
 
 * Fedora: ` sudo dnf install python3`
 

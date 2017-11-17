@@ -86,6 +86,14 @@ class Player(pygame.sprite.Sprite):
             elif self.direc == 'right':
                 self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
 
+class Asset(pygame.sprite.Sprite):
+    def __init__(self,image_file,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(image_file).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h):
