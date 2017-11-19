@@ -50,12 +50,8 @@ If you use pyton2:
 
 ## Credits
 
-* Programmers: Tiago Martins([TigaxMT](https://github.com/TigaxMT "TigaxMT Profile"))
-	      
-  	       Kelvin Ferreira([k30v1n](https://github.com/k30v1n "k30v1n Profile"))
+* Programmers: Tiago Martins([TigaxMT](https://github.com/TigaxMT "TigaxMT Profile")) & Kelvin Ferreira([k30v1n](https://github.com/k30v1n "k30v1n Profile"))
 
 * Sounds: Bruna Silva(Girlfriend of Tiago Martins)
 
-* Design: Zuhria Alfitra a.k.a pzUH - http://www.gameart2d.com/free-platformer-game-tileset.html
-
-	  Tiago Martins
+* Design: Zuhria Alfitra a.k.a pzUH - http://www.gameart2d.com/free-platformer-game-tileset.html & Tiago Martins
