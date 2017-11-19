@@ -51,7 +51,9 @@ BASE = ["sprites/base.png"]
 
 # Credits
 
-CREDITS = ["Programmers: Tiago Martins & Kelvin Ferreira","Sounds: Bruna Silva (Girlfriend of Tiago Martins)","Designers: Zuhria Alfitra a.k.a pzUH"]
+CREDITS = ["Programmers: Tiago Martins", "Kelvin Ferreira","Sounds: Bruna Silva (Girlfriend of Tiago Martins)","Designers: Zuhria Alfitra","Tiago Martins"]
+
+SAMPLE = ["sprites/sample.png"]
 
 # define colors
 WHITE = (255, 255, 255)
