@@ -167,6 +167,8 @@ class Game:
         # game splash/start screen
 
         pygame.mixer.music.stop()
+        bg_img = pygame.image.load(SAMPLE[0])
+        bg_img_rect = bg_img.get_rect()
 
         while True:
             for event in pygame.event.get():
@@ -175,9 +177,10 @@ class Game:
                     self.quit_game()
 
             self.screen.fill(WHITE)
+            self.screen.blit(bg_img,bg_img_rect)
             largeText = pygame.font.SysFont(None,80)
-            TextSurf, TextRect = self.text_objects(TITLE, largeText)
-            TextRect.center = ((WIDTH/2),(HEIGHT/2))
+            TextSurf, TextRect = self.text_objects(TITLE, largeText,BLACK)
+            TextRect.center = ((WIDTH/2),(HEIGHT- 500))
             self.screen.blit(TextSurf, TextRect)
 
             self.button("Play!",150,450,100,50,GREEN,BRIGHT_GREEN,self.new)
@@ -185,7 +188,7 @@ class Game:
             self.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.quit_game)
 
             pygame.display.flip()
-            self.clock.tick(15)
+            self.clock.tick(FPS)
 
     def game_over(self):
         #When player dies
@@ -195,7 +198,7 @@ class Game:
         self.screen.fill(WHITE)
 
         largeText = pygame.font.SysFont(None,115)
-        TextSurf, TextRect = self.text_objects("You Died!", largeText)
+        TextSurf, TextRect = self.text_objects("You Died!", largeText,BLACK)
         TextRect.center = ((WIDTH/2),(HEIGHT/2))
         self.screen.blit(TextSurf, TextRect)
 
@@ -216,7 +219,7 @@ class Game:
         # When game pause
         pygame.mixer.music.pause()
         largeText = pygame.font.SysFont(None,115)
-        TextSurf, TextRect = self.text_objects("Paused", largeText)
+        TextSurf, TextRect = self.text_objects("Paused", largeText,BLACK)
         TextRect.center = ((WIDTH/2),(HEIGHT/2))
         self.screen.blit(TextSurf, TextRect)
 
@@ -240,31 +243,59 @@ class Game:
             self.clock.tick(15)
 
     def credits(self):
+        clr_prog = clr_sound = clr_design = BLACK
+        bg_img = pygame.image.load(SAMPLE[0])
+        bg_img_rect = bg_img.get_rect()
+
+        clr_prog = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
+        clr_sound = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
+        clr_design = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
                     self.quit_game()
 
+            # Show credits
             height = 0
-            width = 0
-            self.screen.fill(WHITE)
+            self.screen.blit(bg_img,bg_img_rect)
+
             for i in range(len(CREDITS)):
-                largeText = pygame.font.SysFont(None,40)
-                TextSurf, TextRect = self.text_objects(CREDITS[i], largeText)
-                height += 100
-                TextRect.center = ((350),(height))
+
+                if CREDITS[i] == "Programmers: Tiago Martins" or "Kelvin Ferreira":
+                    largeText = pygame.font.SysFont(None,40)
+                    TextSurf, TextRect = self.text_objects(CREDITS[i], largeText,clr_prog)
+                if CREDITS[i] == "Sounds: Bruna Silva (Girlfriend of Tiago Martins)": 
+                    largeText = pygame.font.SysFont(None,40)
+                    TextSurf, TextRect = self.text_objects(CREDITS[i], largeText,clr_sound)
+                if CREDITS[i] == "Designers: Zuhria Alfitra" or CREDITS[i] == "Tiago Martins":  
+                    largeText = pygame.font.SysFont(None,40)
+                    TextSurf, TextRect = self.text_objects(CREDITS[i], largeText,clr_design)
+
+                height += 50
+                if CREDITS[i] == "Tiago Martins":
+                    TextRect.x = 165
+                    TextRect.y = height
+                elif CREDITS[i] == "Kelvin Ferreira":
+                    TextRect.x = 215
+                    TextRect.y = height
+                else:
+                    TextRect.x = 10
+                    TextRect.y = height
                 self.screen.blit(TextSurf, TextRect)
 
+
             largeText = pygame.font.SysFont(None,30)
-            TextSurf, TextRect = self.text_objects(" Copyright © 2017  Tiago Martins", largeText)
-            TextRect.center = ((WIDTH/2),(HEIGHT - 200))
+            TextSurf, TextRect = self.text_objects(" Copyright © 2017  Tiago Martins", largeText,BLACK)
+            TextRect.center = ((WIDTH/2),(HEIGHT - 150))
             self.screen.blit(TextSurf, TextRect)
 
             self.button("Main Menu",((WIDTH - 150)/2),(HEIGHT - 100),100,50,BLUE,LIGHTBLUE,self.show_start_screen)
-            pygame.display.flip()
             height = 0
-
+            
+            pygame.display.flip()
+            
     # ---------------- Other Functions ----------------
     
     def unpause(self):
@@ -272,9 +303,9 @@ class Game:
         self.pause = False
         pygame.mixer.music.unpause()
 
-    def text_objects(self,text, font):
+    def text_objects(self,text, font,color=BLACK):
         # Creates Text Messages
-        textSurface = font.render(text, True, BLACK)
+        textSurface = font.render(text, True, color)
         return textSurface, textSurface.get_rect()
 
     def button(self,msg,x,y,w,h,ic,ac,action=None):
@@ -285,7 +316,7 @@ class Game:
         if x+w > mouse[0] > x and y+h > mouse[1] > y:
             pygame.draw.rect(self.screen, ac,(x,y,w,h))
             smallText = pygame.font.SysFont(None,20)
-            textSurf, textRect = self.text_objects(msg, smallText)
+            textSurf, textRect = self.text_objects(msg, smallText,BLACK)
             textRect.center = ( (x+(w/2)), (y+(h/2)) )
             self.screen.blit(textSurf, textRect)
             if click[0] == 1 and action != None:
@@ -293,7 +324,7 @@ class Game:
         else:
             pygame.draw.rect(self.screen, ic,(x,y,w,h))
             smallText = pygame.font.SysFont(None,20)
-            textSurf, textRect = self.text_objects(msg, smallText)
+            textSurf, textRect = self.text_objects(msg, smallText,BLACK)
             textRect.center = ( (x+(w/2)), (y+(h/2)) )
             self.screen.blit(textSurf, textRect)
 

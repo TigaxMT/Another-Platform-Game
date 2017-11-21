@@ -10,10 +10,13 @@ In Future the game will be an endless run RPG game, with mobs and score. And wil
 - [ ] Draw a better sprite player with a sword;
 - [ ] Draw the sprite player sword atack;
 - [ ] Add new sound effects for jump , walk , atack etc;
+- [ ] Add a new sound for the game menu;
 - [ ] Improve the code for better performance;
 - [ ] Improve the code for better programming patterns;
-- [ ] Add assets like trees , stones , bush etc to the environment;
-- [ ] Improve the credits screen;
+- [✔] Add assets like trees , stones , bush etc to the environment;
+- [✔] Improve the credits screen;
+- [ ] Add a animations to the credits and menu screen;
+
 
 ---
 
@@ -23,7 +26,7 @@ It is easy to run the game.
 
 You need to have installed python3.x or python2.x
 
-Open a terminal and wirte the next commands:
+Open a terminal and write the next commands:
 
 * Ubuntu: ` sudo apt install python3 python3-pip`
 
@@ -51,5 +54,4 @@ If you use pyton2:
 
 * Sounds: Bruna Silva(Girlfriend of Tiago Martins)
 
-* Design: Zuhria Alfitra a.k.a pzUH - http://www.gameart2d.com/free-platformer-game-tileset.html
-          Tiago Martins (only the person design)
+* Design: Zuhria Alfitra a.k.a pzUH - http://www.gameart2d.com/free-platformer-game-tileset.html & Tiago Martins
