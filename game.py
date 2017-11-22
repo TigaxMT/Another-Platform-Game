@@ -63,6 +63,10 @@ class Game:
     def update(self):
         # Game Loop - Update
         self.all_sprites.update()
+        keys = pygame.key.get_pressed()
+
+        #------------- Collisions -----------#
+
 
         # check if player hits a platform when it's falling
         if self.player.vel.y > 0:
@@ -76,9 +80,13 @@ class Game:
                 self.player.pos.y = hits_base[0].rect.top
                 self.player.vel.y = 0
 
-        # if player reaches WIDTH - 250
+        for plat in self.platforms:
+            if self.player.rect.colliderect(plat.rect):
+                if self.player.vel.y < 0: # Moving up; Hit the bottom side of the wall
+                    self.player.rect.top = plat.rect.bottom
+                    self.player.vel.y = 10
 
-        keys = pygame.key.get_pressed()
+        # if player reaches WIDTH - 250
 
         if self.player.pos.x <= 0:
             self.player.pos.x = 0

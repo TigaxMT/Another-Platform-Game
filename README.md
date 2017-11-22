@@ -13,8 +13,8 @@ In Future the game will be an endless run RPG game, with mobs and score. And wil
 - [ ] Add a new sound for the game menu;
 - [ ] Improve the code for better performance;
 - [ ] Improve the code for better programming patterns;
-- [✔] Add assets like trees , stones , bush etc to the environment;
-- [✔] Improve the credits screen;
+- [x] Add assets like trees , stones , bush etc to the environment;
+- [x] Improve the credits screen;
 - [ ] Add a animations to the credits and menu screen;
 
 
