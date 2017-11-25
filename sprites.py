@@ -18,31 +18,47 @@
 """
 
 import pygame
-from settings import *
-vec = pygame.math.Vector2
+from settings import * # constants
+vec = pygame.math.Vector2 # define a variable vectors for the movements 
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite): # Creates a Player Sprite
     def __init__(self, game):
-        pygame.sprite.Sprite.__init__(self)
+
+        #Initialize the Sprite function
+        pygame.sprite.Sprite.__init__(self) 
+
         # Pass a game instance of Game Class for player to has access of the Game vars/funcs etc
         self.game = game
+
+        #Define the stop player sprite and get the rectangle of him
         self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
+
+        #Define the vectors of position , velocity and acceleration
         self.pos = vec(WIDTH / 2, HEIGHT / 2)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
-        # Use 2 counter vars to know what image use
+
+        # Use 2 counter variables to know what image use
         self.counter_right = 0
         self.counter_left = 0
-        # direc var is use for set the player direction when it is stopped
+
+        # direc variable is use for set the player direction when it is stopped
         self.direc = "right"
 
-    def jump(self):
-        # jump only if standing on a platform
+    def jump(self): # jump only if standing on a platform
+        
+        #Increment the player rectangle position for a better collision detection
         self.rect.x += 1
+
+        #Verify if player hits a platform or a base
         hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
         hits_base = pygame.sprite.spritecollide(self, self.game.base, False)
+
+        #Decrement the player rectangle position for the initial position
+
+        #If it stand in a platform or a base, the y velocity is decremented 
         self.rect.x -= 1
         if hits:
             self.vel.y = -20
@@ -50,35 +66,54 @@ class Player(pygame.sprite.Sprite):
             self.vel.y = -20
 
 
-    def update(self):
-        # Update Sprites on the screen
+    def update(self): # Update Sprites on the screen
+
+        #Define acceleration with the gravity constant (defined in settings script)
         self.acc = vec(0, PLAYER_GRAV)
+
+        #Store all the keys pressed
         keys = pygame.key.get_pressed()
 
+        #If left key pressed
         if keys[pygame.K_LEFT]:
+
             # Verify if is the last image of the sprite animation, if it was restart the counter
             if self.counter_left == 2:
                 self.counter_left = 0
+
+            #Update the player image with the correct image, to give the sensation of movement
             self.image = pygame.image.load(PLAYER_IMAGE_LIST_LEFT[self.counter_left]).convert_alpha()
+
+            #Put an negative(oposite for the right movement) constant acceleration to the player to give better physics 
             self.acc.x = -PLAYER_ACC
+
             self.counter_left += 1
             self.direc = 'left'
 
+        #If right key pressed
         if keys[pygame.K_RIGHT]:
             # Verify if is the last image of the sprite animation, if it was restart the counter
             if self.counter_right == 2:
                 self.counter_right = 0
+
+            #Update the player image with the correct image, to give the sensation of movement
             self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[self.counter_right]).convert_alpha()
+
+            #Put an positive(oposite for the left movement) constant acceleration to the player to give better physics
             self.acc.x = PLAYER_ACC
+
             self.counter_right += 1
             self.direc = 'right'
 
-        # apply friction
+        # apply friction to the acceleration
         self.acc.x += self.vel.x * PLAYER_FRICTION
+
+
         # equations of motion
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.midbottom = self.pos
+
         # Set the Player Sprite Animation Stopped
         if self.vel.x == 0:
             if self.direc == 'left':
@@ -86,35 +121,63 @@ class Player(pygame.sprite.Sprite):
             elif self.direc == 'right':
                 self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
 
-class Asset(pygame.sprite.Sprite):
+class Asset(pygame.sprite.Sprite): # Creates a Asset Sprite
     def __init__(self,image_file,x,y):
+
+        #Initialize the Sprite function
         pygame.sprite.Sprite.__init__(self)
+
+        #Load the image file and get the rectangle of him
         self.image = pygame.image.load(image_file).convert_alpha()
         self.rect = self.image.get_rect()
+
+        #Put the rectangle in the position
         self.rect.x = x
         self.rect.y = y
 
 
-class Platform(pygame.sprite.Sprite):
+class Platform(pygame.sprite.Sprite): # Creates a Platform Sprite
     def __init__(self, x, y, w, h):
+
+        #Initialize the Sprite function
         pygame.sprite.Sprite.__init__(self)
+
+        #Create the surface to the image
         self.image = pygame.Surface((w, h))
+
+        #Load the image and get the rectangle of him
         self.image = pygame.image.load(PLATFORMS[0]).convert_alpha()
         self.rect = self.image.get_rect()
+
+        #Put the rectangle in the position
         self.rect.x = x
         self.rect.y = y
 
-class Base(pygame.sprite.Sprite):
+class Base(pygame.sprite.Sprite): # Creates a Base Sprite
     def __init__(self,image_file,x, y):
+
+        #Initialize the Sprite function
         pygame.sprite.Sprite.__init__(self)
+
+        #Create the surface to the image
         self.image = pygame.Surface((WIDTH, 71))
+
+        #Load the image and get the rectangle of him
         self.image = pygame.image.load(image_file).convert_alpha()
         self.rect = self.image.get_rect()
+
+        #Put the rectangle in the position
         self.rect.x = x
         self.rect.y = y
-class Background(pygame.sprite.Sprite):
+class Background(pygame.sprite.Sprite): # Creates a Background Sprite
     def __init__(self, image_file, location):
-        pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
+
+        #Initialize the Sprite function
+        pygame.sprite.Sprite.__init__(self) 
+
+        #Load the image file and get the rectangle of him
         self.image = pygame.image.load(image_file).convert_alpha()
+
+        #Put the rectangle in the position
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location

@@ -1,32 +1,51 @@
 import pygame
-from settings import *
+from settings import * # constants
 
 class Screens:
-    def __init__(self,game, screen,widgets):
+    def __init__(self,game, screen,widgets): # Define important variables for the screens
+        
+        #Define class objects 
         self.screen = screen
         self.widgets = widgets
         self.game = game
-    
-    def show_start_screen(self):
-        # game splash/start screen
+
+        #Define the sample image for start and credits screens
+        self.bg_img = pygame.image.load(SAMPLE[0])
+        self.bg_img_rect = self.bg_img.get_rect()
+
+        #Define variables for the color text in credits screen
+        self.clr_prog = self.clr_sound = self.clr_design = BLACK
+
+        #Define and initialize with random data the variable to manipulate and Draw Text Objects
+        self.largeText = pygame.font.SysFont(None,80)
+        self.TextSurf, TextRect = self.widgets.text_objects("Initialize with Random data", self.largeText,BLACK)
+
+    def show_start_screen(self): # game splash/start screen
+
+        # Kill all sprites if they exists
+        if len(self.game.all_sprites) != 0:
+            self.game.killAllSprites()
 
         pygame.mixer.music.stop()
-        bg_img = pygame.image.load(SAMPLE[0])
-        bg_img_rect = bg_img.get_rect()
 
+        #Start Screen function main loop
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
                     self.quit_game()
 
+            #Fill screen with white color and draw the sample image initialized on __init__
             self.screen.fill(WHITE)
-            self.screen.blit(bg_img,bg_img_rect)
-            largeText = pygame.font.SysFont(None,80)
-            TextSurf, TextRect = self.widgets.text_objects(TITLE, largeText,BLACK)
-            TextRect.center = ((WIDTH/2),(HEIGHT- 500))
-            self.screen.blit(TextSurf, TextRect)
+            self.screen.blit(self.bg_img,self.bg_img_rect)
 
+            #Create a surface and rectangle for the Title text
+            self.largeText = pygame.font.SysFont(None,80)
+            self.TextSurf, self.TextRect = self.widgets.text_objects(TITLE, self.largeText,BLACK)
+            self.TextRect.center = ((WIDTH/2),(HEIGHT- 500))
+            self.screen.blit(self.TextSurf, self.TextRect)
+
+            #Create start, credits and quit buttons
             self.widgets.button("Play!",150,450,100,50,GREEN,BRIGHT_GREEN,self.game.new)
             self.widgets.button("Credits",((150+550)/2),500,100,50,DARK_YELLOW,YELLOW,self.credits)
             self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.game.quit_game)
@@ -38,104 +57,132 @@ class Screens:
         #When player dies
 
         pygame.mixer.music.stop()
-
         self.screen.fill(WHITE)
 
-        largeText = pygame.font.SysFont(None,115)
-        TextSurf, TextRect = self.widgets.text_objects("You Died!", largeText,BLACK)
-        TextRect.center = ((WIDTH/2),(HEIGHT/2))
-        self.screen.blit(TextSurf, TextRect)
+        # Kill all sprites
+        self.game.killAllSprites()
+        
+        #Create a surface and rectangle for the gameover text
+        self.largeText = pygame.font.SysFont(None,115)
+        self.TextSurf, self.TextRect = self.widgets.text_objects("You Died!", self.largeText,BLACK)
+        self.TextRect.center = ((WIDTH/2),(HEIGHT/2))
+        self.screen.blit(self.TextSurf, self.TextRect)
 
+        #GameOver function main loop
         while True:
             for event in pygame.event.get():
-                #print(event)
+
+                #Check if Quit event is called
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
 
+            #Create play and quit buttons
             self.widgets.button("Play Again",150,450,100,50,GREEN,BRIGHT_GREEN,self.game.new)
-            self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.show_start_screen)
+            self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.game.quit_game)
 
             pygame.display.flip()
-            self.game.clock.tick(15)
+            self.game.clock.tick(FPS)
 
-    def paused(self):
-        # When game pause
+    def paused(self): # When game pause
+
         pygame.mixer.music.pause()
-        largeText = pygame.font.SysFont(None,115)
-        TextSurf, TextRect = self.widgets.text_objects("Paused", largeText,BLACK)
-        TextRect.center = ((WIDTH/2),(HEIGHT/2))
-        self.screen.blit(TextSurf, TextRect)
 
+        #Create a surface and rectangle for the Paused text
+        self.largeText = pygame.font.SysFont(None,115)
+        self.TextSurf, self.TextRect = self.widgets.text_objects("Paused", self.largeText,BLACK)
+        self.TextRect.center = ((WIDTH/2),(HEIGHT/2))
+        self.screen.blit(self.TextSurf, self.TextRect)
 
+        #Paused function main loop
         while self.game.pause:
             for event in pygame.event.get():
-                #print(event)
+
+                #Check if Quit event is called
                 if event.type == pygame.QUIT:
                     self.running = False
                     pygame.quit()
                     quit()
+                
+                #Check if any key is pressed
                 if event.type == pygame.KEYDOWN:
+                    
                     if event.key == pygame.K_ESCAPE:
                         if self.game.pause == True:
                             self.game.unpause()
 
+            #Create cotninue and quit buttons
             self.widgets.button("Continue",150,450,100,50,GREEN,BRIGHT_GREEN,self.game.unpause)
-            self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.show_start_screen)
+            self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.game.quit_game)
 
             pygame.display.flip()
             self.game.clock.tick(FPS)
 
     def credits(self):
-        clr_prog = clr_sound = clr_design = BLACK
-        bg_img = pygame.image.load(SAMPLE[0])
-        bg_img_rect = bg_img.get_rect()
+        
+        #Randomize new colors
+        self.clr_prog = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
+        self.clr_sound = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
+        self.clr_design = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
 
-        clr_prog = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
-        clr_sound = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
-        clr_design = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
-
+        #Credits function main loop
         while True:
             for event in pygame.event.get():
+
+                #Check if Quit event is called
                 if event.type == pygame.QUIT:
-                    self.game.running = False
                     self.game.quit_game()
-
-            # Show credits
+            
+            #Variable to store the next height for the credits text
             height = 0
-            self.screen.blit(bg_img,bg_img_rect)
 
+            #Draw the sample image
+            self.screen.blit(self.bg_img,self.bg_img_rect)
+
+            # Check the text credits columns
             for i in range(len(CREDITS)):
-
+                
+                #Draw each if statement text in a a different color
                 if CREDITS[i] == "Programmers: Tiago Martins" or "Kelvin Ferreira":
-                    largeText = pygame.font.SysFont(None,40)
-                    TextSurf, TextRect = self.widgets.text_objects(CREDITS[i], largeText,clr_prog)
-                if CREDITS[i] == "Sounds: Bruna Silva (Girlfriend of Tiago Martins)": 
-                    largeText = pygame.font.SysFont(None,40)
-                    TextSurf, TextRect = self.widgets.text_objects(CREDITS[i], largeText,clr_sound)
-                if CREDITS[i] == "Designers: Zuhria Alfitra" or CREDITS[i] == "Tiago Martins":  
-                    largeText = pygame.font.SysFont(None,40)
-                    TextSurf, TextRect = self.widgets.text_objects(CREDITS[i], largeText,clr_design)
+                    self.largeText = pygame.font.SysFont(None,40)
+                    TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_prog)
 
+                elif CREDITS[i] == "Sounds: Bruna Silva (Girlfriend of Tiago Martins)": 
+                    self.largeText = pygame.font.SysFont(None,40)
+                    TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_sound)
+
+                elif CREDITS[i] == "Designers: Zuhria Alfitra" or CREDITS[i] == "Tiago Martins":  
+                    self.largeText = pygame.font.SysFont(None,40)
+                    TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_design)
+
+                #Increase the height variable
                 height += 50
+
+                #Some special positions for some credtis text, for all text stay align
                 if CREDITS[i] == "Tiago Martins":
-                    TextRect.x = 165
-                    TextRect.y = height
+                    self.TextRect.x = 165
+                    self.TextRect.y = height
                 elif CREDITS[i] == "Kelvin Ferreira":
-                    TextRect.x = 215
-                    TextRect.y = height
+                    self.TextRect.x = 215
+                    self.TextRect.y = height
                 else:
-                    TextRect.x = 10
-                    TextRect.y = height
-                self.screen.blit(TextSurf, TextRect)
+                    self.TextRect.x = 10
+                    self.TextRect.y = height
+                
+                #Draw the CREDITS[i] text
+                self.screen.blit(self.TextSurf, self.TextRect)
 
+            #Create a surface and rectangle for the Copyright text
+            self.largeText = pygame.font.SysFont(None,30)
+            self.TextSurf, self.TextRect = self.widgets.text_objects(" Copyright © 2017  Tiago Martins", self.largeText,BLACK)
+            self.TextRect.center = ((WIDTH/2),(HEIGHT - 150))
+            self.screen.blit(self.TextSurf, self.TextRect)
 
-            largeText = pygame.font.SysFont(None,30)
-            TextSurf, TextRect = self.widgets.text_objects(" Copyright © 2017  Tiago Martins", largeText,BLACK)
-            TextRect.center = ((WIDTH/2),(HEIGHT - 150))
-            self.screen.blit(TextSurf, TextRect)
-
+            #Create the Main Menu button
             self.widgets.button("Main Menu",((WIDTH - 150)/2),(HEIGHT - 100),100,50,BLUE,LIGHTBLUE,self.show_start_screen)
+            
+            #Reinitialize the height variable to return draw all text in the same y position
             height = 0
             
             pygame.display.flip()
+            self.game.clock.tick(FPS)

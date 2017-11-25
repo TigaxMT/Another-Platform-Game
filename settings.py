@@ -17,13 +17,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-# game options/settings
 import random
 
 TITLE = "Another Platform Game"
 WIDTH = 800
 HEIGHT = 600
-FPS = 40
+FPS = 60
 
 # Player properties
 PLAYER_ACC = 0.5
