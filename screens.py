@@ -32,8 +32,7 @@ class Screens:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.running = False
-                    self.quit_game()
+                    self.game.quit_game()
 
             #Fill screen with white color and draw the sample image initialized on __init__
             self.screen.fill(WHITE)
@@ -47,7 +46,7 @@ class Screens:
 
             #Create start, credits and quit buttons
             self.widgets.button("Play!",150,450,100,50,GREEN,BRIGHT_GREEN,self.game.new)
-            self.widgets.button("Credits",((150+550)/2),500,100,50,DARK_YELLOW,YELLOW,self.credits)
+            self.widgets.button("Credits",((150+550)/2),450,100,50,DARK_YELLOW,YELLOW,self.credits)
             self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.game.quit_game)
 
             pygame.display.flip()
@@ -79,7 +78,7 @@ class Screens:
 
             #Create play and quit buttons
             self.widgets.button("Play Again",150,450,100,50,GREEN,BRIGHT_GREEN,self.game.new)
-            self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.game.quit_game)
+            self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.show_start_screen)
 
             pygame.display.flip()
             self.game.clock.tick(FPS)
@@ -113,7 +112,7 @@ class Screens:
 
             #Create cotninue and quit buttons
             self.widgets.button("Continue",150,450,100,50,GREEN,BRIGHT_GREEN,self.game.unpause)
-            self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.game.quit_game)
+            self.widgets.button("Quit",550,450,100,50,RED,BRIGHT_RED,self.show_start_screen)
 
             pygame.display.flip()
             self.game.clock.tick(FPS)
@@ -121,14 +120,13 @@ class Screens:
     def credits(self):
         
         #Randomize new colors
-        self.clr_prog = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
-        self.clr_sound = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
-        self.clr_design = (random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
+        self.clr_prog = pygame.Color(random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
+        self.clr_sound = pygame.Color(random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
+        self.clr_design = pygame.Color(random.randrange(0,200),random.randrange(0,200),random.randrange(0,200))
 
         #Credits function main loop
         while True:
             for event in pygame.event.get():
-
                 #Check if Quit event is called
                 if event.type == pygame.QUIT:
                     self.game.quit_game()
@@ -141,19 +139,18 @@ class Screens:
 
             # Check the text credits columns
             for i in range(len(CREDITS)):
-                
                 #Draw each if statement text in a a different color
                 if CREDITS[i] == "Programmers: Tiago Martins" or "Kelvin Ferreira":
                     self.largeText = pygame.font.SysFont(None,40)
-                    TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_prog)
+                    self.TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_prog)
 
-                elif CREDITS[i] == "Sounds: Bruna Silva (Girlfriend of Tiago Martins)": 
+                if CREDITS[i] == "Sounds: Bruna Silva (Girlfriend of Tiago Martins)": 
                     self.largeText = pygame.font.SysFont(None,40)
-                    TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_sound)
+                    self.TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_sound)
 
-                elif CREDITS[i] == "Designers: Zuhria Alfitra" or CREDITS[i] == "Tiago Martins":  
+                if CREDITS[i] == "Designers: Zuhria Alfitra" or CREDITS[i] == "Tiago Martins":  
                     self.largeText = pygame.font.SysFont(None,40)
-                    TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_design)
+                    self.TextSurf, self.TextRect = self.widgets.text_objects(CREDITS[i], self.largeText,self.clr_design)
 
                 #Increase the height variable
                 height += 50
@@ -179,7 +176,7 @@ class Screens:
             self.screen.blit(self.TextSurf, self.TextRect)
 
             #Create the Main Menu button
-            self.widgets.button("Main Menu",((WIDTH - 150)/2),(HEIGHT - 100),100,50,BLUE,LIGHTBLUE,self.show_start_screen)
+            self.widgets.button("Main Menu",((WIDTH - 150)/2),(HEIGHT - 90),100,50,BLUE,LIGHTBLUE,self.show_start_screen)
             
             #Reinitialize the height variable to return draw all text in the same y position
             height = 0

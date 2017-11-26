@@ -23,6 +23,7 @@ from sprites import * # sprites
 from widgets import * # buttons and texts
 from screens import * # credits , gameover, pause screens
 
+
 class Game:
     def __init__(self): # Initialize game window, mixer, clock etc
 
@@ -254,9 +255,8 @@ class Game:
         pygame.quit()
         quit()
 
+# Create an Object of the Game Class
 g = Game()
+
+#Call the start screen funcion
 g.screens.show_start_screen()
-
-g.new()
-
-g.quit_game()

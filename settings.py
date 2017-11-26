@@ -18,6 +18,7 @@
 """
 
 import random
+import pygame
 
 TITLE = "Another Platform Game"
 WIDTH = 800
@@ -55,13 +56,14 @@ CREDITS = ["Programmers: Tiago Martins", "Kelvin Ferreira","Sounds: Bruna Silva 
 SAMPLE = ["sprites/sample.png"]
 
 # define colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-YELLOW = (255, 255, 0)
-LIGHTBLUE = (0, 155, 155)
-BRIGHT_RED = (255,98,98)
-BRIGHT_GREEN = (73,253,79)
-DARK_YELLOW = (255,153,51)
+
+WHITE = pygame.Color(255, 255, 255)
+BLACK = pygame.Color(0, 0, 0)
+RED = pygame.Color(255, 0, 0)
+GREEN = pygame.Color(0, 255, 0)
+BLUE = pygame.Color(0, 0, 255)
+YELLOW = pygame.Color(255, 255, 0)
+LIGHTBLUE = pygame.Color(0, 155, 155)
+BRIGHT_RED = pygame.Color(255,98,98)
+BRIGHT_GREEN = pygame.Color(73,253,79)
+DARK_YELLOW = pygame.Color(255,153,51)
