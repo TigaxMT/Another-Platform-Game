@@ -40,8 +40,19 @@ MUSIC = ["audio/Game_Music.mp3"]
 
 #Images for Sprite Animation
 
-PLAYER_IMAGE_LIST_LEFT = ["sprites/left_0.png","sprites/left_1.png","sprites/left_2.png"]
-PLAYER_IMAGE_LIST_RIGHT = ["sprites/right_0.png","sprites/right_1.png","sprites/right_2.png"]
+PLAYER_IMAGE_LIST_LEFT = ["sprites/Run_left (1).png","sprites/Run_left (2).png","sprites/Run_left (3).png",
+                          "sprites/Run_left (4).png","sprites/Run_left (5).png","sprites/Run_left (6).png",
+                          "sprites/Run_left (7).png","sprites/Run_left (8).png"]
+
+PLAYER_IMAGE_LIST_RIGHT = ["sprites/Run_right (1).png","sprites/Run_right (2).png","sprites/Run_right (3).png",
+                           "sprites/Run_right (4).png","sprites/Run_right (5).png","sprites/Run_right (6).png",
+                           "sprites/Run_right (7).png","sprites/Run_right (8).png"]
+
+PLAYER_IMAGE_STOPPED = ["sprites/Idle (1).png","sprites/Idle (2).png","sprites/Idle (3).png",
+                        "sprites/Idle (4).png","sprites/Idle (5).png","sprites/Idle (6).png",
+                        "sprites/Idle (7).png","sprites/Idle (8).png","sprites/Idle (9).png",
+                        "sprites/Idle (10).png"]
+
 BG = ["sprites/BG.png"]
 PLATFORMS = ["sprites/platform.png"]
 ASSETS = ["sprites/Bush (1).png","sprites/Bush (2).png","sprites/Bush (3).png","sprites/Bush (4).png",

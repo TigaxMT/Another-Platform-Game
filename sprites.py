@@ -18,6 +18,7 @@
 """
 
 import pygame
+import time
 from settings import * # constants
 vec = pygame.math.Vector2 # define a variable vectors for the movements 
 
@@ -36,13 +37,14 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
 
         #Define the vectors of position , velocity and acceleration
-        self.pos = vec(WIDTH / 2, HEIGHT / 2)
+        self.pos = vec(WIDTH / 2, HEIGHT - 71)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
-        # Use 2 counter variables to know what image use
+        # Use 3 counter variables to know what image use
         self.counter_right = 0
         self.counter_left = 0
+        self.counter_stopped = 0
 
         # direc variable is use for set the player direction when it is stopped
         self.direc = "right"
@@ -78,7 +80,7 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
         if keys[pygame.K_LEFT]:
 
             # Verify if is the last image of the sprite animation, if it was restart the counter
-            if self.counter_left == 2:
+            if self.counter_left == 7:
                 self.counter_left = 0
 
             #Update the player image with the correct image, to give the sensation of movement
@@ -93,7 +95,7 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
         #If right key pressed
         if keys[pygame.K_RIGHT]:
             # Verify if is the last image of the sprite animation, if it was restart the counter
-            if self.counter_right == 2:
+            if self.counter_right == 7:
                 self.counter_right = 0
 
             #Update the player image with the correct image, to give the sensation of movement
@@ -115,11 +117,14 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
         self.rect.midbottom = self.pos
 
         # Set the Player Sprite Animation Stopped
-        if self.vel.x == 0:
-            if self.direc == 'left':
-                self.image = pygame.image.load(PLAYER_IMAGE_LIST_LEFT[1])
-            elif self.direc == 'right':
-                self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
+        if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
+            if self.counter_stopped == 9:
+                self.counter_stopped = 0
+                
+            self.image = pygame.image.load(PLAYER_IMAGE_STOPPED[self.counter_stopped])
+            self.counter_stopped += 1
+        else:
+            counter_stopped = 0
 
 class Asset(pygame.sprite.Sprite): # Creates a Asset Sprite
     def __init__(self,image_file,x,y):
