@@ -1,4 +1,4 @@
-from settings import *  # constants
+from settings import BLACK  # constants
 import pygame
 
 

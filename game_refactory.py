@@ -45,8 +45,8 @@ class Game:
         self.screen = Screen(self)
 
         #Change the game icon and title
-        imgIcon = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[2]).convert_alpha()
-        pygame.display.set_icon(imgIcon)
+        img_icon = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[2]).convert_alpha()
+        pygame.display.set_icon(img_icon)
         pygame.display.set_caption(TITLE)
 
         #Create and define already the main sprite group
@@ -66,6 +66,9 @@ class Game:
             "FPS: " + str(self.fps), self.smallText, BLACK)
 
     def show_menu(self):
+        """
+            Show the main menu
+        """
         self.screen.show_start_screen()
 
     def new(self):  # Start a new game
