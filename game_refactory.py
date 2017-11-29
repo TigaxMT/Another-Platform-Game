@@ -1,7 +1,7 @@
 """
     A simple Game to test neural networks , machine learning etc
 
-    Copyright (C) 2017  Tiago Martins
+    Copyright (C) 2017  Tiago Martins, Kelvin Ferreira
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
