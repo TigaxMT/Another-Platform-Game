@@ -1,5 +1,9 @@
-from settings import BLACK  # constants
+"""
+    Widgets
+"""
+
 import pygame
+from game_modules.settings.colors import GameColors
 
 
 class Widgets:
@@ -13,9 +17,9 @@ class Widgets:
         #Define and initialize with random data the variable to manipulate and Draw Text Objects
         self.smallText = pygame.font.SysFont(None, 20)
         self.textSurf, self.textRect = self.text_objects(
-            "Initialize with Random data", self.smallText, BLACK)
+            "Initialize with Random data", self.smallText, GameColors.BLACK)
 
-    def text_objects(self, text, font, color=BLACK):
+    def text_objects(self, text, font, color=GameColors.BLACK):
 
         # Creates Text Messages
         textSurface = font.render(text, True, color)
@@ -38,7 +42,7 @@ class Widgets:
             #Create and draw a surface and rectangle for the Message text
             self.smallText = pygame.font.SysFont(None, 20)
             self.textSurf, self.textRect = self.text_objects(
-                msg, self.smallText, BLACK)
+                msg, self.smallText, GameColors.BLACK)
             self.textRect.center = ((x + (w / 2)), (y + (h / 2)))
             self.surface.blit(self.textSurf, self.textRect)
 
@@ -54,6 +58,6 @@ class Widgets:
             #Create and draw a surface and rectangle for the Message text
             self.smallText = pygame.font.SysFont(None, 20)
             self.textSurf, self.textRect = self.text_objects(
-                msg, self.smallText, BLACK)
+                msg, self.smallText, GameColors.BLACK)
             self.textRect.center = ((x + (w / 2)), (y + (h / 2)))
             self.surface.blit(self.textSurf, self.textRect)

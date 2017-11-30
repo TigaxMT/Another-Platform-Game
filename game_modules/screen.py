@@ -1,6 +1,17 @@
+"""
+    Screen module
+"""
+
+import random
 import pygame
-from settings import *  # constants
-from widgets import *  # widgets
+from widgets import Widgets
+
+#settings
+from game_modules.settings.colors import GameColors
+from game_modules.settings.platform import PlatformSettings
+from game_modules.settings.sprites import EnviromentSprites
+from game_modules.settings.strings import GameTexts
+from game_modules.settings.credits import GameCredits
 
 
 class Screen:
@@ -11,21 +22,21 @@ class Screen:
     def __init__(self, game):  # Define important variables for the screens
         # Define class objects
         self.surface = pygame.display.set_mode(
-            (WIDTH, HEIGHT))  # Creating the surface
+            (PlatformSettings.WIDTH, PlatformSettings.HEIGHT))  # Creating the surface
         self.widgets = Widgets(self.surface)
         self.game = game
 
         #Define the sample image for start and credits screens
-        self.bg_img = pygame.image.load(SAMPLE[0])
+        self.bg_img = pygame.image.load(EnviromentSprites.SAMPLE[0])
         self.bg_img_rect = self.bg_img.get_rect()
 
         #Define variables for the color text in credits screen
-        self.clr_prog = self.clr_sound = self.clr_design = BLACK
+        self.clr_prog = self.clr_sound = self.clr_design = GameColors.BLACK
 
         #Define and initialize with random data the variable to manipulate and Draw Text Objects
         self.largeText = pygame.font.SysFont(None, 80)
         self.TextSurf, TextRect = self.widgets.text_objects(
-            "Initialize with Random data", self.largeText, BLACK)
+            "Initialize with Random data", self.largeText, GameColors.BLACK)
 
     def show_start_screen(self):  # game splash/start screen
 
@@ -42,32 +53,33 @@ class Screen:
                     self.game.quit_game()
 
             #Fill screen with white color and draw the sample image initialized on __init__
-            self.surface.fill(WHITE)
+            self.surface.fill(GameColors.WHITE)
             self.surface.blit(self.bg_img, self.bg_img_rect)
 
             #Create a surface and rectangle for the Title text
             self.largeText = pygame.font.SysFont(None, 80)
             self.TextSurf, self.TextRect = self.widgets.text_objects(
-                TITLE, self.largeText, BLACK)
-            self.TextRect.center = ((WIDTH / 2), (HEIGHT - 500))
+                GameTexts.TITLE, self.largeText, GameColors.BLACK)
+            self.TextRect.center = (
+                (PlatformSettings.WIDTH / 2), (PlatformSettings.HEIGHT - 500))
             self.surface.blit(self.TextSurf, self.TextRect)
 
             #Create start, credits and quit buttons
             self.widgets.button("Play!", 150, 450, 100, 50,
-                                GREEN, BRIGHT_GREEN, self.game.new)
+                                GameColors.GREEN, GameColors.BRIGHT_GREEN, self.game.new)
             self.widgets.button("Credits", ((150 + 550) / 2),
-                                450, 100, 50, DARK_YELLOW, YELLOW, self.credits)
+                                450, 100, 50, GameColors.DARK_YELLOW, GameColors.YELLOW, self.credits)
             self.widgets.button("Quit", 550, 450, 100, 50,
-                                RED, BRIGHT_RED, self.game.quit_game)
+                                GameColors.RED, GameColors.BRIGHT_RED, self.game.quit_game)
 
             pygame.display.flip()
-            self.game.clock.tick(FPS)
+            self.game.clock.tick(PlatformSettings.FPS)
 
     def game_over(self):
         #When player dies
 
         pygame.mixer.music.stop()
-        self.surface.fill(WHITE)
+        self.surface.fill(GameColors.WHITE)
 
         # Kill all sprites
         self.game.killAllSprites()
@@ -75,8 +87,9 @@ class Screen:
         #Create a surface and rectangle for the gameover text
         self.largeText = pygame.font.SysFont(None, 115)
         self.TextSurf, self.TextRect = self.widgets.text_objects(
-            "You Died!", self.largeText, BLACK)
-        self.TextRect.center = ((WIDTH / 2), (HEIGHT / 2))
+            "You Died!", self.largeText, GameColors.BLACK)
+        self.TextRect.center = (
+            (PlatformSettings.WIDTH / 2), (PlatformSettings.HEIGHT / 2))
         self.surface.blit(self.TextSurf, self.TextRect)
 
         #GameOver function main loop
@@ -90,12 +103,12 @@ class Screen:
 
             #Create play and quit buttons
             self.widgets.button("Play Again", 150, 450, 100,
-                                50, GREEN, BRIGHT_GREEN, self.game.new)
+                                50, GameColors.GREEN, GameColors.BRIGHT_GREEN, self.game.new)
             self.widgets.button("Quit", 550, 450, 100, 50,
-                                RED, BRIGHT_RED, self.show_start_screen)
+                                GameColors.RED, GameColors.BRIGHT_RED, self.show_start_screen)
 
             pygame.display.flip()
-            self.game.clock.tick(FPS)
+            self.game.clock.tick(PlatformSettings.FPS)
 
     def paused(self):  # When game pause
 
@@ -104,8 +117,9 @@ class Screen:
         #Create a surface and rectangle for the Paused text
         self.largeText = pygame.font.SysFont(None, 115)
         self.TextSurf, self.TextRect = self.widgets.text_objects(
-            "Paused", self.largeText, BLACK)
-        self.TextRect.center = ((WIDTH / 2), (HEIGHT / 2))
+            "Paused", self.largeText, GameColors.BLACK)
+        self.TextRect.center = (
+            (PlatformSettings.WIDTH / 2), (PlatformSettings.HEIGHT / 2))
         self.surface.blit(self.TextSurf, self.TextRect)
 
         #Paused function main loop
@@ -127,12 +141,12 @@ class Screen:
 
             #Create cotninue and quit buttons
             self.widgets.button("Continue", 150, 450, 100,
-                                50, GREEN, BRIGHT_GREEN, self.game.unpause)
+                                50, GameColors.GREEN, GameColors.BRIGHT_GREEN, self.game.unpause)
             self.widgets.button("Quit", 550, 450, 100, 50,
-                                RED, BRIGHT_RED, self.show_start_screen)
+                                GameColors.RED, GameColors.BRIGHT_RED, self.show_start_screen)
 
             pygame.display.flip()
-            self.game.clock.tick(FPS)
+            self.game.clock.tick(PlatformSettings.FPS)
 
     def credits(self):
 
@@ -158,53 +172,54 @@ class Screen:
             self.surface.blit(self.bg_img, self.bg_img_rect)
 
             # Check the text credits columns
-            for i in range(len(CREDITS)):
+            for i in range(len(GameCredits.CREDITS)):
                 #Draw each if statement text in a a different color
-                if CREDITS[i] == "Programmers: Tiago Martins" or "Kelvin Ferreira":
+                if GameCredits.CREDITS[i] == "Programmers: Tiago Martins" or "Kelvin Ferreira":
                     self.largeText = pygame.font.SysFont(None, 40)
                     self.TextSurf, self.TextRect = self.widgets.text_objects(
-                        CREDITS[i], self.largeText, self.clr_prog)
+                        GameCredits.CREDITS[i], self.largeText, self.clr_prog)
 
-                if CREDITS[i] == "Sounds: Bruna Silva (Girlfriend of Tiago Martins)":
+                if GameCredits.CREDITS[i] == "Sounds: Bruna Silva (Girlfriend of Tiago Martins)":
                     self.largeText = pygame.font.SysFont(None, 40)
                     self.TextSurf, self.TextRect = self.widgets.text_objects(
-                        CREDITS[i], self.largeText, self.clr_sound)
+                        GameCredits.CREDITS[i], self.largeText, self.clr_sound)
 
-                if CREDITS[i] == "Designers: Zuhria Alfitra" or CREDITS[i] == "Tiago Martins":
+                if GameCredits.CREDITS[i] == "Designers: Zuhria Alfitra" or GameCredits.CREDITS[i] == "Tiago Martins":
                     self.largeText = pygame.font.SysFont(None, 40)
                     self.TextSurf, self.TextRect = self.widgets.text_objects(
-                        CREDITS[i], self.largeText, self.clr_design)
+                        GameCredits.CREDITS[i], self.largeText, self.clr_design)
 
                 #Increase the height variable
                 height += 50
 
                 #Some special positions for some credtis text, for all text stay align
-                if CREDITS[i] == "Tiago Martins":
+                if GameCredits.CREDITS[i] == "Tiago Martins":
                     self.TextRect.x = 165
                     self.TextRect.y = height
-                elif CREDITS[i] == "Kelvin Ferreira":
+                elif GameCredits.CREDITS[i] == "Kelvin Ferreira":
                     self.TextRect.x = 215
                     self.TextRect.y = height
                 else:
                     self.TextRect.x = 10
                     self.TextRect.y = height
 
-                #Draw the CREDITS[i] text
+                #Draw the GameCredits.CREDITS[i] text
                 self.surface.blit(self.TextSurf, self.TextRect)
 
             #Create a surface and rectangle for the Copyright text
             self.largeText = pygame.font.SysFont(None, 30)
             self.TextSurf, self.TextRect = self.widgets.text_objects(
-                " Copyright © 2017  Tiago Martins", self.largeText, BLACK)
-            self.TextRect.center = ((WIDTH / 2), (HEIGHT - 150))
+                " Copyright © 2017  Tiago Martins", self.largeText, GameColors.BLACK)
+            self.TextRect.center = (
+                (PlatformSettings.WIDTH / 2), (PlatformSettings.HEIGHT - 150))
             self.surface.blit(self.TextSurf, self.TextRect)
 
             #Create the Main Menu button
-            self.widgets.button("Main Menu", ((WIDTH - 150) / 2), (HEIGHT - 90),
-                                100, 50, BLUE, LIGHTBLUE, self.show_start_screen)
+            self.widgets.button("Main Menu", ((PlatformSettings.WIDTH - 150) / 2), (PlatformSettings.HEIGHT - 90),
+                                100, 50, GameColors.BLUE, GameColors.LIGHTBLUE, self.show_start_screen)
 
             #Reinitialize the height variable to return draw all text in the same y position
             height = 0
 
             pygame.display.flip()
-            self.game.clock.tick(FPS)
+            self.game.clock.tick(PlatformSettings.FPS)

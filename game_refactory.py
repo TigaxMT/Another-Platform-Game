@@ -18,14 +18,20 @@
 """
 import random
 import pygame
-from settings import *  # constants
+#from settings import *  # constants
 
 #Estas referencias são responsabilidades da TELA
 from sprites import Player, Asset, Platform, Base, Background  # sprites
-#from widgets import Widgets  # buttons and texts
-#from screens import * # credits , gameover, pause screens
 
-from game_modules.screen import Screen  # Game screen
+# Game screen
+from game_modules.screen import Screen
+
+#settings imports
+from game_modules.settings.sprites import PlayerSprites, EnviromentSprites
+from game_modules.settings.strings import GameTexts
+from game_modules.settings.colors import GameColors
+from game_modules.settings.audio import GameAudios
+from game_modules.settings.platform import PlatformSettings
 
 
 class Game:
@@ -33,21 +39,30 @@ class Game:
         Game is responsible for user interactions
     """
 
-    def __init__(self):  # Initialize game window, mixer, clock etc
+    def __init__(self):
+        # Defining class variables
+        self.player = None
+        self.platforms = None
+        self.small_text = None
+        self.text_surf = None
+        self.text_rect = None
+        self.assets = None
+        self.base = None
+        self.background = None
+        self.playing = None
 
         #Initialize pygame and mixer
         pygame.init()
         pygame.mixer.init()
 
-        #Define and initialize classes objects
-        #TODO: Remover variavel WIDGETS
-        #self.widgets = Widgets(self.screen)
+        # Initializing
         self.screen = Screen(self)
 
         #Change the game icon and title
-        img_icon = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[2]).convert_alpha()
+        img_icon = pygame.image.load(
+            PlayerSprites.PLAYER_IMAGE_LIST_RIGHT[2]).convert_alpha()
         pygame.display.set_icon(img_icon)
-        pygame.display.set_caption(TITLE)
+        pygame.display.set_caption(GameTexts.TITLE)
 
         #Create and define already the main sprite group
         self.all_sprites = pygame.sprite.Group()
@@ -60,10 +75,10 @@ class Game:
         self.fps = 0.0
 
         #Define and initialize with random data the variable to manipulate and Draw Text Objects
-        self.smallText = pygame.font.SysFont(None, 40)
+        self.small_text = pygame.font.SysFont(None, 40)
 
-        self.textSurf, textRect = self.screen.widgets.text_objects(
-            "FPS: " + str(self.fps), self.smallText, BLACK)
+        self.text_surf, self.text_rect = self.screen.widgets.text_objects(
+            "FPS: " + str(self.fps), self.small_text, GameColors.BLACK)
 
     def show_menu(self):
         """
@@ -78,7 +93,7 @@ class Game:
             self.killAllSprites()
 
         #Loading and playing the main soundtrack
-        pygame.mixer.music.load(MUSIC[0])
+        pygame.mixer.music.load(GameAudios.MUSIC[0])
         pygame.mixer.music.play(-1)
 
         #Define a object to Player Class (sprite player class)
@@ -90,11 +105,11 @@ class Game:
         self.base = pygame.sprite.Group()
 
         #Define the first platform_base position
-        b = Base(BASE[0], 0, HEIGHT - 71)
+        b = Base(EnviromentSprites.BASE[0], 0, PlatformSettings.HEIGHT - 71)
         self.base.add(b)
 
         #Define the background image(sprite)
-        self.background = Background(BG[0], [0, 0])
+        self.background = Background(EnviromentSprites.BACKGROUND[0], [0, 0])
 
         #Add to the main sprite group all the others sprite groups
         self.all_sprites.add(self.background)
@@ -110,7 +125,7 @@ class Game:
 
         # Main Loop
         while self.playing:
-            self.clock.tick(FPS)
+            self.clock.tick(PlatformSettings.FPS)
             self.events()
             self.update()
             self.draw()
@@ -150,7 +165,7 @@ class Game:
             self.player.pos.x = 0
 
         # if player reaches WIDTH - 250 , player stay running in the same position (WIDTH - 250)
-        if self.player.rect.right >= (WIDTH - 250):
+        if self.player.rect.right >= (PlatformSettings.WIDTH - 250):
             self.player.pos.x -= abs(self.player.vel.x)
 
             # Only if the player moves to right, platforms and assets move
@@ -179,36 +194,39 @@ class Game:
 
                     #Randomize base platforms,only if don't have 2 bases spawned
                     while len(self.base) < 2:
-                        if bases.rect.right <= WIDTH:
-                            b = Base(BASE[0], random.randrange(
-                                WIDTH, WIDTH + 50), HEIGHT - 71)
-                            self.base.add(b)
-                            self.all_sprites.add(b)
+                        if bases.rect.right <= PlatformSettings.WIDTH:
+                            base = Base(EnviromentSprites.BASE[0], random.randrange(
+                                PlatformSettings.WIDTH, PlatformSettings.WIDTH + 50),
+                                PlatformSettings.HEIGHT - 71)
+                            self.base.add(base)
+                            self.all_sprites.add(base)
 
         # Randomize platforms, only if don't have 1 spawned
         while len(self.platforms) < 1:
-            p = Platform(random.randrange(WIDTH, WIDTH + 250),
-                         random.randrange(HEIGHT / 2,  HEIGHT - (71 + 71)),
+            p = Platform(random.randrange(PlatformSettings.WIDTH, PlatformSettings.WIDTH + 250),
+                         random.randrange(
+                             PlatformSettings.HEIGHT / 2,  PlatformSettings.HEIGHT - (71 + 71)),
                          195, 71)
             self.platforms.add(p)
             self.all_sprites.add(p)
 
         # Randomize assets, only if don't have 2 assets spawned
         while len(self.assets) < 2:
-            n_img = random.randrange(0, len(ASSETS))
+            n_img = random.randrange(0, len(EnviromentSprites.ASSETS))
 
             #Load the image: the Asset class will load to get the height for spawn correctly the assets
-            img = pygame.image.load(ASSETS[n_img]).convert_alpha()
+            img = pygame.image.load(
+                EnviromentSprites.ASSETS[n_img]).convert_alpha()
             height_img = img.get_size()[1]
 
             #Define a class Asset object and add it to the main sprite group
-            a = Asset(ASSETS[n_img], random.randrange(
-                WIDTH, WIDTH + 250), HEIGHT - (height_img + 71))
+            a = Asset(EnviromentSprites.ASSETS[n_img], random.randrange(
+                PlatformSettings.WIDTH, PlatformSettings.WIDTH + 250), PlatformSettings.HEIGHT - (height_img + 71))
             self.assets.add(a)
             self.all_sprites.add(a)
 
         # If player fall down
-        if self.player.rect.bottom >= HEIGHT:
+        if self.player.rect.bottom >= PlatformSettings.HEIGHT:
             self.screen.game_over()
 
     def events(self):  # Game Loop - events
@@ -233,7 +251,7 @@ class Game:
 
     def draw(self):  # Game Loop - draw
 
-        self.screen.surface.fill(WHITE)
+        self.screen.surface.fill(GameColors.WHITE)
         self.all_sprites.draw(self.screen.surface)
 
         #Draw FPS
@@ -248,12 +266,12 @@ class Game:
         self.fps = round(self.clock.get_fps())
 
         #Create and draw a surface and rectangle for the FPS text
-        self.smallText = pygame.font.SysFont(None, 40)
-        self.textSurf, self.textRect = self.screen.widgets.text_objects(
-            "FPS: " + str(self.fps), self.smallText, BLACK)
-        self.textRect.x = 30
-        self.textRect.y = 30
-        self.screen.surface.blit(self.textSurf, self.textRect)
+        self.small_text = pygame.font.SysFont(None, 40)
+        self.text_surf, self.text_rect = self.screen.widgets.text_objects(
+            "FPS: " + str(self.fps), self.small_text, GameColors.BLACK)
+        self.text_rect.x = 30
+        self.text_rect.y = 30
+        self.screen.surface.blit(self.text_surf, self.text_rect)
 
     def killAllSprites(self):  # Kill all Sprites
 
