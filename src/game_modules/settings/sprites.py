@@ -13,7 +13,7 @@ class PlayerSprites:
     PLAYER_IMAGE_STOPPED = ["sprites/Idle (%i).png" % i for i in range(1, 11)]
 
 
-class EnviromentSprites:
+class PlatformSprites:
     """
         Enviroment sprites
     """

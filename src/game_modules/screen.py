@@ -4,12 +4,13 @@
 
 import random
 import pygame
-from widgets import Widgets
+
+from game_modules.widgets import Widgets
 
 #settings
 from game_modules.settings.colors import GameColors
 from game_modules.settings.platform import PlatformSettings
-from game_modules.settings.sprites import EnviromentSprites
+from game_modules.settings.sprites import PlatformSprites
 from game_modules.settings.strings import GameTexts
 from game_modules.settings.credits import GameCredits
 
@@ -27,7 +28,7 @@ class Screen:
         self.game = game
 
         #Define the sample image for start and credits screens
-        self.bg_img = pygame.image.load(EnviromentSprites.SAMPLE[0])
+        self.bg_img = pygame.image.load(PlatformSprites.SAMPLE[0])
         self.bg_img_rect = self.bg_img.get_rect()
 
         #Define variables for the color text in credits screen
