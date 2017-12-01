@@ -17,27 +17,38 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import pygame
 import time
-from settings import * # constants
-vec = pygame.math.Vector2 # define a variable vectors for the movements 
+import pygame
 
-class Player(pygame.sprite.Sprite): # Creates a Player Sprite
+#settings
+from game_modules.settings.colors import GameColors
+from game_modules.settings.sprites import PlayerSprites, PlatformSprites
+
+from game_modules.settings.platform import PlatformSettings
+from game_modules.settings.player import PlayerSettings
+
+vec = pygame.math.Vector2  # define a variable vectors for the movements
+
+
+class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
     def __init__(self, game):
 
         #Initialize the Sprite function
-        pygame.sprite.Sprite.__init__(self) 
+        pygame.sprite.Sprite.__init__(self)
 
         # Pass a game instance of Game Class for player to has access of the Game vars/funcs etc
         self.game = game
 
         #Define the stop player sprite and get the rectangle of him
-        self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[1])
+        self.image = pygame.image.load(
+            PlayerSprites.PLAYER_IMAGE_LIST_RIGHT[1])
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH / 2, HEIGHT / 2)
+        self.rect.center = (PlatformSettings.WIDTH / 2,
+                            PlatformSettings.HEIGHT / 2)
 
         #Define the vectors of position , velocity and acceleration
-        self.pos = vec(WIDTH / 2, HEIGHT - 71)
+        self.pos = vec(PlatformSettings.WIDTH / 2,
+                       PlatformSettings.HEIGHT - 71)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -49,8 +60,8 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
         # direc variable is use for set the player direction when it is stopped
         self.direc = "right"
 
-    def jump(self): # jump only if standing on a platform
-        
+    def jump(self):  # jump only if standing on a platform
+
         #Increment the player rectangle position for a better collision detection
         self.rect.x += 1
 
@@ -60,18 +71,17 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
 
         #Decrement the player rectangle position for the initial position
 
-        #If it stand in a platform or a base, the y velocity is decremented 
+        #If it stand in a platform or a base, the y velocity is decremented
         self.rect.x -= 1
         if hits:
             self.vel.y = -20
         elif hits_base:
             self.vel.y = -20
 
-
-    def update(self): # Update Sprites on the screen
+    def update(self):  # Update Sprites on the screen
 
         #Define acceleration with the gravity constant (defined in settings script)
-        self.acc = vec(0, PLAYER_GRAV)
+        self.acc = vec(0, PlayerSettings.PLAYER_GRAV)
 
         #Store all the keys pressed
         keys = pygame.key.get_pressed()
@@ -84,10 +94,11 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
                 self.counter_left = 0
 
             #Update the player image with the correct image, to give the sensation of movement
-            self.image = pygame.image.load(PLAYER_IMAGE_LIST_LEFT[self.counter_left]).convert_alpha()
+            self.image = pygame.image.load(
+                PlayerSprites.PLAYER_IMAGE_LIST_LEFT[self.counter_left]).convert_alpha()
 
-            #Put an negative(oposite for the right movement) constant acceleration to the player to give better physics 
-            self.acc.x = -PLAYER_ACC
+            #Put an negative(oposite for the right movement) constant acceleration to the player to give better physics
+            self.acc.x = -PlayerSettings.PLAYER_ACC
 
             self.counter_left += 1
             self.direc = 'left'
@@ -99,17 +110,17 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
                 self.counter_right = 0
 
             #Update the player image with the correct image, to give the sensation of movement
-            self.image = pygame.image.load(PLAYER_IMAGE_LIST_RIGHT[self.counter_right]).convert_alpha()
+            self.image = pygame.image.load(
+                PlayerSprites.PLAYER_IMAGE_LIST_RIGHT[self.counter_right]).convert_alpha()
 
             #Put an positive(oposite for the left movement) constant acceleration to the player to give better physics
-            self.acc.x = PLAYER_ACC
+            self.acc.x = PlayerSettings.PLAYER_ACC
 
             self.counter_right += 1
             self.direc = 'right'
 
         # apply friction to the acceleration
-        self.acc.x += self.vel.x * PLAYER_FRICTION
-
+        self.acc.x += self.vel.x * PlayerSettings.PLAYER_FRICTION
 
         # equations of motion
         self.vel += self.acc
@@ -120,14 +131,16 @@ class Player(pygame.sprite.Sprite): # Creates a Player Sprite
         if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
             if self.counter_stopped == 9:
                 self.counter_stopped = 0
-                
-            self.image = pygame.image.load(PLAYER_IMAGE_STOPPED[self.counter_stopped])
+
+            self.image = pygame.image.load(
+                PlayerSprites.PLAYER_IMAGE_STOPPED[self.counter_stopped])
             self.counter_stopped += 1
         else:
             counter_stopped = 0
 
-class Asset(pygame.sprite.Sprite): # Creates a Asset Sprite
-    def __init__(self,image_file,x,y):
+
+class Asset(pygame.sprite.Sprite):  # Creates a Asset Sprite
+    def __init__(self, image_file, x, y):
 
         #Initialize the Sprite function
         pygame.sprite.Sprite.__init__(self)
@@ -141,7 +154,7 @@ class Asset(pygame.sprite.Sprite): # Creates a Asset Sprite
         self.rect.y = y
 
 
-class Platform(pygame.sprite.Sprite): # Creates a Platform Sprite
+class Platform(pygame.sprite.Sprite):  # Creates a Platform Sprite
     def __init__(self, x, y, w, h):
 
         #Initialize the Sprite function
@@ -151,21 +164,23 @@ class Platform(pygame.sprite.Sprite): # Creates a Platform Sprite
         self.image = pygame.Surface((w, h))
 
         #Load the image and get the rectangle of him
-        self.image = pygame.image.load(PLATFORMS[0]).convert_alpha()
+        self.image = pygame.image.load(
+            PlatformSprites.PLATFORMS[0]).convert_alpha()
         self.rect = self.image.get_rect()
 
         #Put the rectangle in the position
         self.rect.x = x
         self.rect.y = y
 
-class Base(pygame.sprite.Sprite): # Creates a Base Sprite
-    def __init__(self,image_file,x, y):
+
+class Base(pygame.sprite.Sprite):  # Creates a Base Sprite
+    def __init__(self, image_file, x, y):
 
         #Initialize the Sprite function
         pygame.sprite.Sprite.__init__(self)
 
         #Create the surface to the image
-        self.image = pygame.Surface((WIDTH, 71))
+        self.image = pygame.Surface((PlatformSettings.WIDTH, 71))
 
         #Load the image and get the rectangle of him
         self.image = pygame.image.load(image_file).convert_alpha()
@@ -174,11 +189,13 @@ class Base(pygame.sprite.Sprite): # Creates a Base Sprite
         #Put the rectangle in the position
         self.rect.x = x
         self.rect.y = y
-class Background(pygame.sprite.Sprite): # Creates a Background Sprite
+
+
+class Background(pygame.sprite.Sprite):  # Creates a Background Sprite
     def __init__(self, image_file, location):
 
         #Initialize the Sprite function
-        pygame.sprite.Sprite.__init__(self) 
+        pygame.sprite.Sprite.__init__(self)
 
         #Load the image file and get the rectangle of him
         self.image = pygame.image.load(image_file).convert_alpha()
