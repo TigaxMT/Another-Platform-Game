@@ -5,10 +5,10 @@ In Future the game will be an endless run RPG game, with mobs and score. And wil
 
 # Check List of things to do
 
-- [ ] Improve base_platform sprite movement;
+- [x] Improve base_platform sprite movement;
 - [ ] Improve the platform collision;
-- [ ] Draw a better sprite player with a sword;
-- [ ] Draw the sprite player sword atack;
+- [x] Draw a better sprite player with a sword;
+- [x] Draw the sprite player sword atack;
 - [ ] Add new sound effects for jump , walk , atack etc;
 - [ ] Add a new sound for the game menu;
 - [ ] Improve the code for better performance;
@@ -54,4 +54,4 @@ If you use pyton2:
 
 * Sounds: Bruna Silva(Girlfriend of Tiago Martins)
 
-* Design: Zuhria Alfitra a.k.a pzUH - http://www.gameart2d.com/free-platformer-game-tileset.html & Tiago Martins
+* Design: Zuhria Alfitra a.k.a pzUH - https://www.gameart2d.com/

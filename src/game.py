@@ -164,38 +164,18 @@ class Game:
         if self.player.rect.right >= (PlatformSettings.WIDTH - 250):
             self.player.pos.x -= abs(self.player.vel.x)
 
-            # Only if the player moves to right, platforms and assets move
-            if keys[pygame.K_RIGHT]:
+        # Only if the player moves to right, platforms and assets move
+        if keys[pygame.K_RIGHT]:
 
-                #Moving each platform and kill platforms reach Width 0
-                for plat in self.platforms:
-                    if self.player.vel.x > 0:
-                        plat.rect.x -= abs(self.player.vel.x)
-                    if plat.rect.right < 0:
-                        plat.kill()
+            #Verify if is need to kill or move a platform
+            self.player.kill_move("Platform")
 
-                #Moving each asset and kill assets reach Width 0
-                for ass in self.assets:
-                    if self.player.vel.x > 0:
-                        ass.rect.x -= abs(self.player.vel.x)
-                    if ass.rect.right < 0:
-                        ass.kill()
+            #Verify if is need to kill or move a asset
+            self.player.kill_move("Asset")
 
-                #Moving each base and kill bases reach Width 0
-                for bases in self.base:
-                    if self.player.vel.x > 0:
-                        bases.rect.x -= abs(self.player.vel.x)
-                    if bases.rect.right < 0:
-                        bases.kill()
+            #Verify if is need to kill or move a base
+            self.player.kill_move("Base")
 
-                    #Randomize base platforms,only if don't have 2 bases spawned
-                    while len(self.base) < 2:
-                        if bases.rect.right <= PlatformSettings.WIDTH:
-                            base = Base(PlatformSprites.BASE[0], random.randrange(
-                                PlatformSettings.WIDTH, PlatformSettings.WIDTH + 50),
-                                PlatformSettings.HEIGHT - 71)
-                            self.base.add(base)
-                            self.all_sprites.add(base)
 
         # Randomize platforms, only if don't have 1 spawned
         while len(self.platforms) < 1:

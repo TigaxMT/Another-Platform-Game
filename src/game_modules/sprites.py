@@ -19,6 +19,7 @@
 
 import time
 import pygame
+import random
 
 #settings
 from game_modules.settings.colors import GameColors
@@ -59,6 +60,44 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
 
         # direc variable is use for set the player direction when it is stopped
         self.direc = "right"
+
+    def kill_move(self,entity):
+
+        if entity == "Plaform":
+
+            #Moving each platform and kill platforms reach Width 0
+            for plat in self.game.platforms:
+                if self.vel.x > 0:
+                    plat.rect.x -= abs(self.vel.x)
+                if plat.rect.right < 0:
+                    plat.kill()
+
+        elif entity == "Asset":
+
+            #Moving each asset and kill assets reach Width 0
+            for ass in self.game.assets:
+                if self.vel.x > 0:
+                    ass.rect.x -= abs(self.vel.x)
+                if ass.rect.right < 0:
+                    ass.kill()
+
+        elif entity == "Base":
+
+            #Moving each base and kill bases reach Width 0
+            for bases in self.game.base:
+                if self.vel.x > 0:
+                    bases.rect.x -= abs(self.vel.x)
+                if bases.rect.right < 0:
+                    bases.kill()
+
+            #Randomize base platforms,only if don't have 2 bases spawned
+            while len(self.game.base) < 2:
+                if bases.rect.right <= PlatformSettings.WIDTH:
+                    base = Base(PlatformSprites.BASE[0], random.randrange(
+                        PlatformSettings.WIDTH, PlatformSettings.WIDTH + 50),
+                        PlatformSettings.HEIGHT - 71)
+                    self.game.base.add(base)
+                    self.game.all_sprites.add(base)
 
     def jump(self):  # jump only if standing on a platform
 
