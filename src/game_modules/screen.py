@@ -42,8 +42,8 @@ class Screen:
     def show_start_screen(self):  # game splash/start screen
 
         # Kill all sprites if they exists
-        if len(self.game.all_sprites) != 0:
-            self.game.killAllSprites()
+        if len(self.game.level.all_sprites) != 0:
+            self.game.level.killAllSprites()
 
         pygame.mixer.music.stop()
 
@@ -83,7 +83,7 @@ class Screen:
         self.surface.fill(GameColors.WHITE)
 
         # Kill all sprites
-        self.game.killAllSprites()
+        self.game.level.killAllSprites()
 
         #Create a surface and rectangle for the gameover text
         self.largeText = pygame.font.SysFont(None, 115)
@@ -185,7 +185,7 @@ class Screen:
                     self.TextSurf, self.TextRect = self.widgets.text_objects(
                         GameCredits.CREDITS[i], self.largeText, self.clr_sound)
 
-                if GameCredits.CREDITS[i] == "Designers: Zuhria Alfitra" or GameCredits.CREDITS[i] == "Tiago Martins":
+                if GameCredits.CREDITS[i] == "Designers: Zuhria Alfitra":
                     self.largeText = pygame.font.SysFont(None, 40)
                     self.TextSurf, self.TextRect = self.widgets.text_objects(
                         GameCredits.CREDITS[i], self.largeText, self.clr_design)
@@ -194,10 +194,7 @@ class Screen:
                 height += 50
 
                 #Some special positions for some credtis text, for all text stay align
-                if GameCredits.CREDITS[i] == "Tiago Martins":
-                    self.TextRect.x = 165
-                    self.TextRect.y = height
-                elif GameCredits.CREDITS[i] == "Kelvin Ferreira":
+                if GameCredits.CREDITS[i] == "Kelvin Ferreira":
                     self.TextRect.x = 215
                     self.TextRect.y = height
                 else:

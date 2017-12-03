@@ -7,10 +7,10 @@ class PlayerSprites:
         Player sprites
     """
     PLAYER_IMAGE_LIST_LEFT = [
-        "sprites/Run_left (%i).png" % i for i in range(1, 9)]
+        "sprites/Run_left (%i).png" % i for i in range(1, 10)]
     PLAYER_IMAGE_LIST_RIGHT = [
-        "sprites/Run_right (%i).png" % i for i in range(1, 9)]
-    PLAYER_IMAGE_STOPPED = ["sprites/Idle (%i).png" % i for i in range(1, 11)]
+        "sprites/Run_right (%i).png" % i for i in range(1, 10)]
+    PLAYER_IMAGE_STOPPED = ["sprites/Idle (%i).png" % i for i in range(1, 10)]
 
 
 class PlatformSprites:

@@ -19,7 +19,6 @@
 
 import time
 import pygame
-import random
 
 #settings
 from game_modules.settings.colors import GameColors
@@ -61,52 +60,14 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         # direc variable is use for set the player direction when it is stopped
         self.direc = "right"
 
-    def kill_move(self,entity):
-
-        if entity == "Plaform":
-
-            #Moving each platform and kill platforms reach Width 0
-            for plat in self.game.platforms:
-                if self.vel.x > 0:
-                    plat.rect.x -= abs(self.vel.x)
-                if plat.rect.right < 0:
-                    plat.kill()
-
-        elif entity == "Asset":
-
-            #Moving each asset and kill assets reach Width 0
-            for ass in self.game.assets:
-                if self.vel.x > 0:
-                    ass.rect.x -= abs(self.vel.x)
-                if ass.rect.right < 0:
-                    ass.kill()
-
-        elif entity == "Base":
-
-            #Moving each base and kill bases reach Width 0
-            for bases in self.game.base:
-                if self.vel.x > 0:
-                    bases.rect.x -= abs(self.vel.x)
-                if bases.rect.right < 0:
-                    bases.kill()
-
-            #Randomize base platforms,only if don't have 2 bases spawned
-            while len(self.game.base) < 2:
-                if bases.rect.right <= PlatformSettings.WIDTH:
-                    base = Base(PlatformSprites.BASE[0], random.randrange(
-                        PlatformSettings.WIDTH, PlatformSettings.WIDTH + 50),
-                        PlatformSettings.HEIGHT - 71)
-                    self.game.base.add(base)
-                    self.game.all_sprites.add(base)
-
     def jump(self):  # jump only if standing on a platform
 
         #Increment the player rectangle position for a better collision detection
         self.rect.x += 1
 
         #Verify if player hits a platform or a base
-        hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
-        hits_base = pygame.sprite.spritecollide(self, self.game.base, False)
+        hits = pygame.sprite.spritecollide(self, self.game.level.platforms, False)
+        hits_base = pygame.sprite.spritecollide(self, self.game.level.base, False)
 
         #Decrement the player rectangle position for the initial position
 
@@ -116,6 +77,30 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
             self.vel.y = -20
         elif hits_base:
             self.vel.y = -20
+
+    def collisionDetection(self):
+        
+        # check if player collide a platform when it's falling
+        if self.vel.y > 0:
+            hits = pygame.sprite.spritecollide(
+                self, self.game.level.platforms, False)
+            hits_base = pygame.sprite.spritecollide(
+                self, self.game.level.base, False)
+            if hits:
+                self.pos.y = hits[0].rect.top
+                self.vel.y = 0
+
+            elif hits_base:
+                self.pos.y = hits_base[0].rect.top
+                self.vel.y = 0
+
+        # check if player collide a platform when jump
+        elif self.vel.y < 0:
+            for plat in self.game.level.platforms:
+                if self.rect.colliderect(plat.rect):
+                    if self.vel.y < 0:  # Moving up; Hit the bottom side of the wall
+                        self.rect.top = plat.rect.bottom
+                        self.vel.y = 10
 
     def update(self):  # Update Sprites on the screen
 

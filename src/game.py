@@ -29,6 +29,7 @@ from game_modules.settings.strings import GameTexts
 from game_modules.settings.colors import GameColors
 from game_modules.settings.audio import GameAudios
 from game_modules.settings.platform import PlatformSettings
+from game_modules.level import Level
 
 class Game:
     """
@@ -37,14 +38,6 @@ class Game:
 
     def __init__(self):
         # Defining class variables
-        self.player = None
-        self.platforms = None
-        self.small_text = None
-        self.text_surf = None
-        self.text_rect = None
-        self.assets = None
-        self.base = None
-        self.background = None
         self.playing = None
 
         #Initialize pygame and mixer
@@ -53,6 +46,8 @@ class Game:
 
         # Initializing
         self.screen = Screen(self)
+        self.player = Player(self)
+        self.level  = Level(self)
 
         #Change the game icon and title
         img_icon = pygame.image.load(
@@ -60,21 +55,9 @@ class Game:
         pygame.display.set_icon(img_icon)
         pygame.display.set_caption(GameTexts.TITLE)
 
-        #Create and define already the main sprite group
-        self.all_sprites = pygame.sprite.Group()
-
         #Define and initialize clock and boolean pause to know if game is paused or not
         self.clock = pygame.time.Clock()
         self.pause = False
-
-        #Variable to store FPS
-        self.fps = 0.0
-
-        #Define and initialize with random data the variable to manipulate and Draw Text Objects
-        self.small_text = pygame.font.SysFont(None, 40)
-
-        self.text_surf, self.text_rect = self.screen.widgets.text_objects(
-            "FPS: " + str(self.fps), self.small_text, GameColors.BLACK)
 
     def show_menu(self):
         """
@@ -85,32 +68,12 @@ class Game:
     def new(self):  # Start a new game
 
         # Kill all sprites if they exists
-        if len(self.all_sprites) != 0:
-            self.killAllSprites()
+        if len(self.level.all_sprites) != 0:
+            self.level.killAllSprites()
 
         #Loading and playing the main soundtrack
         pygame.mixer.music.load(GameAudios.MUSIC[0])
         pygame.mixer.music.play(-1)
-
-        #Define a object to Player Class (sprite player class)
-        self.player = Player(self)
-
-        #Create all needed sprite groups
-        self.platforms = pygame.sprite.Group()
-        self.assets = pygame.sprite.Group()
-        self.base = pygame.sprite.Group()
-
-        #Define the first platform_base position
-        b = Base(PlatformSprites.BASE[0], 0, PlatformSettings.HEIGHT - 71)
-        self.base.add(b)
-
-        #Define the background image(sprite)
-        self.background = Background(PlatformSprites.BACKGROUND[0], [0, 0])
-
-        #Add to the main sprite group all the others sprite groups
-        self.all_sprites.add(self.background)
-        self.all_sprites.add(self.player)
-        self.all_sprites.add(self.base)
 
         #Call the main loop function
         self.run()
@@ -118,6 +81,8 @@ class Game:
     def run(self):  # Game Loop
 
         self.playing = True
+
+        self.level.initSprites()
 
         # Main Loop
         while self.playing:
@@ -128,32 +93,13 @@ class Game:
 
     def update(self):  # Game Loop - Update
 
-        self.all_sprites.update()
+        self.level.all_sprites.update()
 
         #Get all keys pressed
         keys = pygame.key.get_pressed()
 
-        # check if player collide a platform when it's falling
-        if self.player.vel.y > 0:
-            hits = pygame.sprite.spritecollide(
-                self.player, self.platforms, False)
-            hits_base = pygame.sprite.spritecollide(
-                self.player, self.base, False)
-            if hits:
-                self.player.pos.y = hits[0].rect.top
-                self.player.vel.y = 0
-
-            elif hits_base:
-                self.player.pos.y = hits_base[0].rect.top
-                self.player.vel.y = 0
-
-        # check if player collide a platform when jump
-        elif self.player.vel.y < 0:
-            for plat in self.platforms:
-                if self.player.rect.colliderect(plat.rect):
-                    if self.player.vel.y < 0:  # Moving up; Hit the bottom side of the wall
-                        self.player.rect.top = plat.rect.bottom
-                        self.player.vel.y = 10
+        #Verify if player collide with any platform
+        self.player.collisionDetection()
 
         # if player reaches 0 width, platforms and assets stop moving
 
@@ -168,38 +114,20 @@ class Game:
         if keys[pygame.K_RIGHT]:
 
             #Verify if is need to kill or move a platform
-            self.player.kill_move("Platform")
+            self.level.kill_move("Platform")
 
             #Verify if is need to kill or move a asset
-            self.player.kill_move("Asset")
+            self.level.kill_move("Asset")
 
             #Verify if is need to kill or move a base
-            self.player.kill_move("Base")
+            self.level.kill_move("Base")
 
-
-        # Randomize platforms, only if don't have 1 spawned
-        while len(self.platforms) < 1:
-            p = Platform(random.randrange(PlatformSettings.WIDTH, PlatformSettings.WIDTH + 250),
-                         random.randrange(
-                             PlatformSettings.HEIGHT / 2,  PlatformSettings.HEIGHT - (71 + 71)),
-                         195, 71)
-            self.platforms.add(p)
-            self.all_sprites.add(p)
-
-        # Randomize assets, only if don't have 2 assets spawned
-        while len(self.assets) < 2:
-            n_img = random.randrange(0, len(PlatformSprites.ASSETS))
-
-            #Load the image: the Asset class will load to get the height for spawn correctly the assets
-            img = pygame.image.load(
-                PlatformSprites.ASSETS[n_img]).convert_alpha()
-            height_img = img.get_size()[1]
-
-            #Define a class Asset object and add it to the main sprite group
-            a = Asset(PlatformSprites.ASSETS[n_img], random.randrange(
-                PlatformSettings.WIDTH, PlatformSettings.WIDTH + 250), PlatformSettings.HEIGHT - (height_img + 71))
-            self.assets.add(a)
-            self.all_sprites.add(a)
+        # Verify if is need to randomize any entity
+        if len(self.level.platforms) < 1:
+            self.level.randEntities("Platform")
+        
+        if len(self.level.assets) < 2:
+            self.level.randEntities("Asset")
 
         # If player fall down
         if self.player.rect.bottom >= PlatformSettings.HEIGHT:
@@ -228,33 +156,15 @@ class Game:
     def draw(self):  # Game Loop - draw
 
         self.screen.surface.fill(GameColors.WHITE)
-        self.all_sprites.draw(self.screen.surface)
+
+        self.level.all_sprites.draw(self.screen.surface)
 
         #Draw FPS
-        self.showFPS()
+        self.level.showFPS()
 
         # after drawing everything, flip(update) the display
         pygame.display.flip()
 
-    def showFPS(self):  # Show FPS on screen
-
-        #Update FPS variable
-        self.fps = round(self.clock.get_fps())
-
-        #Create and draw a surface and rectangle for the FPS text
-        self.small_text = pygame.font.SysFont(None, 40)
-        self.text_surf, self.text_rect = self.screen.widgets.text_objects(
-            "FPS: " + str(self.fps), self.small_text, GameColors.BLACK)
-        self.text_rect.x = 30
-        self.text_rect.y = 30
-        self.screen.surface.blit(self.text_surf, self.text_rect)
-
-    def killAllSprites(self):  # Kill all Sprites
-
-        self.all_sprites.empty()
-        self.platforms.empty()
-        self.assets.empty()
-        self.base.empty()
 
     def unpause(self):  # Unpause the game
 
