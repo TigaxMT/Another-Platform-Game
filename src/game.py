@@ -71,8 +71,12 @@ class Game:
         if len(self.level.all_sprites) != 0:
             self.level.killAllSprites()
 
+        #Stop the menu music
+        pygame.mixer.music.stop()
+
         #Loading and playing the main soundtrack
         pygame.mixer.music.load(GameAudios.MUSIC[0])
+        pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(-1)
 
         #Call the main loop function

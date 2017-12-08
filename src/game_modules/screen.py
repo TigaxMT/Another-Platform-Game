@@ -13,6 +13,7 @@ from game_modules.settings.platform import PlatformSettings
 from game_modules.settings.sprites import PlatformSprites
 from game_modules.settings.strings import GameTexts
 from game_modules.settings.credits import GameCredits
+from game_modules.settings.audio import GameAudios
 
 
 class Screen:
@@ -45,7 +46,13 @@ class Screen:
         if len(self.game.level.all_sprites) != 0:
             self.game.level.killAllSprites()
 
+        #Stop the main music
         pygame.mixer.music.stop()
+
+        #Loading and playing the menu soundtrack
+        pygame.mixer.music.load(GameAudios.MENU_MUSIC[0])
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play(-1)
 
         #Start Screen function main loop
         while True:

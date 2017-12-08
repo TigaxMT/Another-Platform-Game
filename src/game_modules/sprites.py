@@ -26,6 +26,7 @@ from game_modules.settings.sprites import PlayerSprites, PlatformSprites
 
 from game_modules.settings.platform import PlatformSettings
 from game_modules.settings.player import PlayerSettings
+from game_modules.settings.audio import GameAudios
 
 vec = pygame.math.Vector2  # define a variable vectors for the movements
 
@@ -60,6 +61,10 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         # direc variable is use for set the player direction when it is stopped
         self.direc = "right"
 
+        #Jump sound
+        self.jump_sound = pygame.mixer.Sound(GameAudios.PLAYER_JUMP[0])
+        self.jump_sound.set_volume(0.6)
+
     def jump(self):  # jump only if standing on a platform
 
         #Increment the player rectangle position for a better collision detection
@@ -75,8 +80,11 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         self.rect.x -= 1
         if hits:
             self.vel.y = -20
+            pygame.mixer.Sound.play(self.jump_sound)
+
         elif hits_base:
             self.vel.y = -20
+            pygame.mixer.Sound.play(self.jump_sound)
 
     def collisionDetection(self):
         
