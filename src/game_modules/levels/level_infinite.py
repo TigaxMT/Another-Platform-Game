@@ -1,17 +1,18 @@
-import pygame
 import random
+import pygame
 
-# Game screen and sprites
-from game_modules.screen import Screen
-from game_modules.sprites import Player, Asset, Platform, Base, Background
+#Game controllers
+from game_modules.controllers.asset import Asset
+from game_modules.controllers.platform import Platform
+from game_modules.controllers.base import Base
+from game_modules.controllers.background import Background
 
 #settings imports
-from game_modules.settings.sprites import PlayerSprites, PlatformSprites
-from game_modules.settings.strings import GameTexts
+from game_modules.settings.sprites import PlatformSprites
 from game_modules.settings.colors import GameColors
 from game_modules.settings.platform import PlatformSettings
 
-class Level:
+class LevelInfinite:
     def __init__(self,game):
         
         self.game = game

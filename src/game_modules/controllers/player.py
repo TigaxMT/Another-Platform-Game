@@ -1,35 +1,12 @@
-"""
-    A simple Game to test neural networks , machine learning etc
 
-    Copyright (C) 2017  Tiago Martins
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-
-import time
 import pygame
 
-#settings
-from game_modules.settings.colors import GameColors
-from game_modules.settings.sprites import PlayerSprites, PlatformSprites
-
-from game_modules.settings.platform import PlatformSettings
 from game_modules.settings.player import PlayerSettings
+from game_modules.settings.sprites import PlayerSprites
+from game_modules.settings.platform import PlatformSettings
 from game_modules.settings.audio import GameAudios
 
 vec = pygame.math.Vector2  # define a variable vectors for the movements
-
 
 class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
     def __init__(self, game):
@@ -165,73 +142,7 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
                 self.counter_stopped = 0
 
             self.image = pygame.image.load(
-                PlayerSprites.PLAYER_IMAGE_STOPPED[self.counter_stopped])
+                PlayerSprites.PLAYER_IMAGE_STOPPED[self.counter_stopped]).convert_alpha()
             self.counter_stopped += 1
         else:
-            counter_stopped = 0
-
-
-class Asset(pygame.sprite.Sprite):  # Creates a Asset Sprite
-    def __init__(self, image_file, x, y):
-
-        #Initialize the Sprite function
-        pygame.sprite.Sprite.__init__(self)
-
-        #Load the image file and get the rectangle of him
-        self.image = pygame.image.load(image_file).convert_alpha()
-        self.rect = self.image.get_rect()
-
-        #Put the rectangle in the position
-        self.rect.x = x
-        self.rect.y = y
-
-
-class Platform(pygame.sprite.Sprite):  # Creates a Platform Sprite
-    def __init__(self, x, y, w, h):
-
-        #Initialize the Sprite function
-        pygame.sprite.Sprite.__init__(self)
-
-        #Create the surface to the image
-        self.image = pygame.Surface((w, h))
-
-        #Load the image and get the rectangle of him
-        self.image = pygame.image.load(
-            PlatformSprites.PLATFORMS[0]).convert_alpha()
-        self.rect = self.image.get_rect()
-
-        #Put the rectangle in the position
-        self.rect.x = x
-        self.rect.y = y
-
-
-class Base(pygame.sprite.Sprite):  # Creates a Base Sprite
-    def __init__(self, image_file, x, y):
-
-        #Initialize the Sprite function
-        pygame.sprite.Sprite.__init__(self)
-
-        #Create the surface to the image
-        self.image = pygame.Surface((PlatformSettings.WIDTH, 71))
-
-        #Load the image and get the rectangle of him
-        self.image = pygame.image.load(image_file).convert_alpha()
-        self.rect = self.image.get_rect()
-
-        #Put the rectangle in the position
-        self.rect.x = x
-        self.rect.y = y
-
-
-class Background(pygame.sprite.Sprite):  # Creates a Background Sprite
-    def __init__(self, image_file, location):
-
-        #Initialize the Sprite function
-        pygame.sprite.Sprite.__init__(self)
-
-        #Load the image file and get the rectangle of him
-        self.image = pygame.image.load(image_file).convert_alpha()
-
-        #Put the rectangle in the position
-        self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
+            self.counter_stopped = 0
