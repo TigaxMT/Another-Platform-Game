@@ -7,11 +7,10 @@ from game_modules.sprites import Player, Asset, Platform, Base, Background
 
 #settings imports
 from game_modules.settings.sprites import PlayerSprites, PlatformSprites
-from game_modules.settings.strings import GameTexts
 from game_modules.settings.colors import GameColors
 from game_modules.settings.platform import PlatformSettings
 
-class Level:
+class LevelInfinite:
     def __init__(self,game):
         
         self.game = game
