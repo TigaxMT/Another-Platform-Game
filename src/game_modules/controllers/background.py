@@ -1,6 +1,7 @@
 
 import pygame
 
+
 class Background(pygame.sprite.Sprite):  # Creates a Background Sprite
     def __init__(self, image_file, location):
 
