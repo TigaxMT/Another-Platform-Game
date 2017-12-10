@@ -165,7 +165,7 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
                 self.counter_stopped = 0
 
             self.image = pygame.image.load(
-                PlayerSprites.PLAYER_IMAGE_STOPPED[self.counter_stopped])
+                PlayerSprites.PLAYER_IMAGE_STOPPED[self.counter_stopped]).convert_alpha()
             self.counter_stopped += 1
         else:
             counter_stopped = 0

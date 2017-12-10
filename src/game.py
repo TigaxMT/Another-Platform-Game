@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import random
+
 import pygame
 
 # Game screen and sprites
@@ -30,6 +30,7 @@ from game_modules.settings.colors import GameColors
 from game_modules.settings.audio import GameAudios
 from game_modules.settings.platform import PlatformSettings
 from game_modules.level import Level
+
 
 class Game:
     """
@@ -47,7 +48,7 @@ class Game:
         # Initializing
         self.screen = Screen(self)
         self.player = Player(self)
-        self.level  = Level(self)
+        self.level = Level(self)
 
         #Change the game icon and title
         img_icon = pygame.image.load(
@@ -129,7 +130,7 @@ class Game:
         # Verify if is need to randomize any entity
         if len(self.level.platforms) < 1:
             self.level.randEntities("Platform")
-        
+
         if len(self.level.assets) < 2:
             self.level.randEntities("Asset")
 
@@ -168,7 +169,6 @@ class Game:
 
         # after drawing everything, flip(update) the display
         pygame.display.flip()
-
 
     def unpause(self):  # Unpause the game
 
