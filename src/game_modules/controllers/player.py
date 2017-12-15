@@ -1,3 +1,21 @@
+"""
+    A simple Game to test neural networks , machine learning etc
+
+    Copyright (C) 2017  Tiago Martins, Kelvin Ferreira
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
 import pygame
 
@@ -64,28 +82,40 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
             pygame.mixer.Sound.play(self.jump_sound)
 
     def collisionDetection(self):
+
+        keys = pygame.key.get_pressed()
         
         # check if player collide a platform when it's falling
         if self.vel.y > 0:
-            hits = pygame.sprite.spritecollide(
-                self, self.game.level.platforms, False)
-            hits_base = pygame.sprite.spritecollide(
-                self, self.game.level.base, False)
-            if hits:
-                self.pos.y = hits[0].rect.top
-                self.vel.y = 0
-
-            elif hits_base:
-                self.pos.y = hits_base[0].rect.top
-                self.vel.y = 0
-
-        # check if player collide a platform when jump
-        elif self.vel.y < 0:
             for plat in self.game.level.platforms:
                 if self.rect.colliderect(plat.rect):
-                    if self.vel.y < 0:  # Moving up; Hit the bottom side of the wall
-                        self.rect.top = plat.rect.bottom
-                        self.vel.y = 10
+                    if self.rect.bottom >= plat.rect.top:
+                        self.pos.y = plat.rect.top
+                        self.vel.y = 0
+
+            for bas in self.game.level.base:
+                if self.rect.colliderect(bas.rect):
+                    if self.rect.bottom >= bas.rect.top:
+                        self.pos.y = bas.rect.top
+                        self.vel.y = 0
+
+        # check if player collide a platform when it's running
+
+        if round(self.vel.x) != 0 and self.pos.y == PlatformSettings.HEIGHT - 71:
+            for plat in self.game.level.platforms:
+                if self.rect.colliderect(plat.rect):
+
+                    if self.rect.midright >= plat.rect.midleft and keys[pygame.K_RIGHT]:
+                        self.pos.x = plat.rect.left
+                        self.pos.y = PlatformSettings.HEIGHT - 71
+                        self.vel.x = 0
+                        self.acc.x = 0
+                    
+                    elif self.rect.midleft <= plat.rect.midright and keys[pygame.K_LEFT]:
+                        self.pos.x = plat.rect.right
+                        self.pos.y = PlatformSettings.HEIGHT - 71
+                        self.vel.x = 0
+                        self.acc.x = 0
 
     def update(self):  # Update Sprites on the screen
 

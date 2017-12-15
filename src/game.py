@@ -25,13 +25,9 @@ from game_modules.levels.level_infinite import LevelInfinite
 
 #Game controllers
 from game_modules.controllers.player import Player
-from game_modules.controllers.asset import Asset
-from game_modules.controllers.platform import Platform
-from game_modules.controllers.base import Base
-from game_modules.controllers.background import Background
 
 #settings imports
-from game_modules.settings.sprites import PlayerSprites, PlatformSprites
+from game_modules.settings.sprites import PlayerSprites
 from game_modules.settings.strings import GameTexts
 from game_modules.settings.colors import GameColors
 from game_modules.settings.audio import GameAudios
