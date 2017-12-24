@@ -61,7 +61,6 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         self.jump_sound.set_volume(0.6)
 
     def jump(self):  # jump only if standing on a platform
-
         #Increment the player rectangle position for a better collision detection
         self.rect.x += 1
 
@@ -85,6 +84,20 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
 
         keys = pygame.key.get_pressed()
         
+        # Check if player collide an enemy
+
+        #Increment the player rectangle position for a better collision detection
+        self.rect.x += 1
+
+        #Verify if player hits a platform or a base
+        hits = pygame.sprite.spritecollide(self, self.game.level.enemies, False)
+
+        #Decrement the player rectangle position for the initial position
+        self.rect.x -= 1
+
+        if hits:
+            self.game.screen.game_over()
+
         # check if player collide a platform when it's falling
         if self.vel.y > 0:
             for plat in self.game.level.platforms:
@@ -102,20 +115,28 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         # check if player collide a platform when it's running
 
         if round(self.vel.x) != 0 and self.pos.y == PlatformSettings.HEIGHT - 71:
+
             for plat in self.game.level.platforms:
                 if self.rect.colliderect(plat.rect):
-
-                    if self.rect.midright >= plat.rect.midleft and keys[pygame.K_RIGHT]:
+                    
+                    if self.rect.midright >= plat.rect.midleft and self.rect.midright < plat.rect.midright and keys[pygame.K_RIGHT]:
                         self.pos.x = plat.rect.left
                         self.pos.y = PlatformSettings.HEIGHT - 71
                         self.vel.x = 0
                         self.acc.x = 0
+                        self.game.level.side_collide = True
                     
-                    elif self.rect.midleft <= plat.rect.midright and keys[pygame.K_LEFT]:
+                    elif self.rect.midleft <= plat.rect.midright and self.rect.midleft > plat.rect.midleft and keys[pygame.K_LEFT]:
                         self.pos.x = plat.rect.right
                         self.pos.y = PlatformSettings.HEIGHT - 71
                         self.vel.x = 0
                         self.acc.x = 0
+                        self.game.level.side_collide = True
+                    
+                    else:
+                        self.game.level.side_collide = False
+                else:
+                    self.game.level.side_collide = False
 
     def update(self):  # Update Sprites on the screen
 

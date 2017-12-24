@@ -120,6 +120,9 @@ class Game:
         # Only if the player moves to right, platforms and assets move
         if keys[pygame.K_RIGHT]:
 
+            #Verify if is need to kill or move a enemy
+            self.level.kill_move("Enemy")
+
             #Verify if is need to kill or move a platform
             self.level.kill_move("Platform")
 
@@ -132,6 +135,9 @@ class Game:
         # Verify if is need to randomize any entity
         if len(self.level.platforms) < 1:
             self.level.randEntities("Platform")
+
+        if len(self.level.enemies) < 1:
+            self.level.randEntities("Enemy")
 
         if len(self.level.assets) < 2:
             self.level.randEntities("Asset")

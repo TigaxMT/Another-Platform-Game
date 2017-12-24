@@ -25,8 +25,10 @@ from game_modules.controllers.asset import Asset
 from game_modules.controllers.platform import Platform
 from game_modules.controllers.base import Base
 from game_modules.controllers.background import Background
+from game_modules.controllers.enemy import Enemy
 
 #settings imports
+from game_modules.settings.sprites import EnemySprites
 from game_modules.settings.sprites import PlatformSprites
 from game_modules.settings.colors import GameColors
 from game_modules.settings.platform import PlatformSettings
@@ -43,10 +45,13 @@ class LevelInfinite:
         #Variable to store FPS
         self.fps = 0.0
 
+        self.side_collide = False
+
         #Create all needed sprite groups
         self.platforms = pygame.sprite.Group()
         self.assets = pygame.sprite.Group()
         self.base = pygame.sprite.Group()
+        self.enemies = pygame.sprite.Group()
         self.background = None
 
         #Create and define already the main sprite group
@@ -75,7 +80,21 @@ class LevelInfinite:
 
     def randEntities(self,entity):
         
-        if entity == "Platform":
+        if entity == "Enemy":
+            while len(self.enemies) < 1:
+
+                #Load the image: the Enemy class will load to get the height for spawn correctly the assets
+                img = pygame.image.load(
+                    EnemySprites.ENEMY_IMAGE_STOPPED[0]).convert_alpha()
+                height_img = img.get_size()[1]
+
+                e = Enemy(random.randrange(PlatformSettings.WIDTH, PlatformSettings.WIDTH + 250), 
+                                            PlatformSettings.HEIGHT - (height_img + 71))
+                
+                self.enemies.add(e)
+                self.all_sprites.add(e)
+
+        elif entity == "Platform":
 
             # Randomize platforms, only if don't have 1 spawned
             while len(self.platforms) < 1:
@@ -106,11 +125,21 @@ class LevelInfinite:
 
     def kill_move(self,entity):
 
-        if entity == "Platform":
+        if entity == "Enemy":
+            #Moving each platform and kill platforms reach Width 0
+            for enem in self.enemies:
+
+                if self.game.player.vel.x > 0:
+                    enem.rect.x -= abs(self.game.player.vel.x)
+                if enem.rect.right < 0:
+                    enem.kill()
+
+        elif entity == "Platform":
 
             #Moving each platform and kill platforms reach Width 0
             for plat in self.platforms:
-                if self.game.player.vel.x > 0:
+
+                if self.game.player.vel.x > 0 and self.side_collide == False:
                     plat.rect.x -= abs(self.game.player.vel.x)
                 if plat.rect.right < 0:
                     plat.kill()
@@ -119,7 +148,7 @@ class LevelInfinite:
 
             #Moving each asset and kill assets reach Width 0
             for ass in self.assets:
-                if self.game.player.vel.x > 0:
+                if self.game.player.vel.x > 0 and self.side_collide == False:
                     ass.rect.x -= abs(self.game.player.vel.x)
                 if ass.rect.right < 0:
                     ass.kill()
@@ -128,7 +157,7 @@ class LevelInfinite:
 
             #Moving each base and kill bases reach Width 0
             for bases in self.base:
-                if self.game.player.vel.x > 0:
+                if self.game.player.vel.x > 0 and self.side_collide == False:
                     bases.rect.x -= abs(self.game.player.vel.x)
                 if bases.rect.right < 0:
                     bases.kill()
@@ -141,7 +170,7 @@ class LevelInfinite:
                             PlatformSettings.HEIGHT - 71)
                         self.base.add(base)
                         self.all_sprites.add(base)
-
+ 
     def showFPS(self):  # Show FPS on screen
 
         #Update FPS variable
@@ -161,3 +190,4 @@ class LevelInfinite:
         self.platforms.empty()
         self.assets.empty()
         self.base.empty()
+        self.enemies.empty()

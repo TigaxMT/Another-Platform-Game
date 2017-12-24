@@ -45,3 +45,13 @@ class PlatformSprites:
         "sprites/Stone.png", "sprites/Tree_2.png", "sprites/Tree_3.png", "sprites/Sign_2.png"]
     BASE = ["sprites/base.png"]
     SAMPLE = ["sprites/sample.png"]
+
+class EnemySprites:
+    """
+        Enemy sprites
+    """
+    ENEMY_IMAGE_LIST_LEFT = [
+        "sprites/Run_left (%i).png" % i for i in range(1, 10)]
+    ENEMY_IMAGE_LIST_RIGHT = [
+        "sprites/Run_right (%i).png" % i for i in range(1, 10)]
+    ENEMY_IMAGE_STOPPED = ["sprites/Idle (%i).png" % i for i in range(1, 10)]
