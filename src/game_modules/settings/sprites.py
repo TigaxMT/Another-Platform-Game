@@ -54,4 +54,3 @@ class EnemySprites:
         "sprites/Run_left (%i).png" % i for i in range(1, 10)]
     ENEMY_IMAGE_LIST_RIGHT = [
         "sprites/Run_right (%i).png" % i for i in range(1, 10)]
-    ENEMY_IMAGE_STOPPED = ["sprites/Idle (%i).png" % i for i in range(1, 10)]

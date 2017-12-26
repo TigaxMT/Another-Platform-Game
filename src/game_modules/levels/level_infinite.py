@@ -85,7 +85,7 @@ class LevelInfinite:
 
                 #Load the image: the Enemy class will load to get the height for spawn correctly the assets
                 img = pygame.image.load(
-                    EnemySprites.ENEMY_IMAGE_STOPPED[0]).convert_alpha()
+                    EnemySprites.ENEMY_IMAGE_LIST_RIGHT[0]).convert_alpha()
                 height_img = img.get_size()[1]
 
                 e = Enemy(random.randrange(PlatformSettings.WIDTH, PlatformSettings.WIDTH + 250), 

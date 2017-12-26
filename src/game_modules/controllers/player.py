@@ -83,22 +83,8 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
     def collisionDetection(self):
 
         keys = pygame.key.get_pressed()
-        
-        # Check if player collide an enemy
 
-        #Increment the player rectangle position for a better collision detection
-        self.rect.x += 1
-
-        #Verify if player hits a platform or a base
-        hits = pygame.sprite.spritecollide(self, self.game.level.enemies, False)
-
-        #Decrement the player rectangle position for the initial position
-        self.rect.x -= 1
-
-        if hits:
-            self.game.screen.game_over()
-
-        # check if player collide a platform when it's falling
+        # check if player collide a platform or an enemy when it's falling
         if self.vel.y > 0:
             for plat in self.game.level.platforms:
                 if self.rect.colliderect(plat.rect):
@@ -111,6 +97,31 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
                     if self.rect.bottom >= bas.rect.top:
                         self.pos.y = bas.rect.top
                         self.vel.y = 0
+
+            # If player collide an enemy when it's falling , enemy will die
+
+            if round(self.vel.y) > 0:
+                for enm in self.game.level.enemies:
+                    if self.rect.colliderect(enm.rect):
+                        if self.rect.midbottom >= plat.rect.midtop:
+                            enm.kill()
+
+
+
+        # check if player collide an enemy when it's running
+
+        if self.pos.y == PlatformSettings.HEIGHT - 71:
+            
+            for enm in self.game.level.enemies:
+                if self.rect.colliderect(enm.rect):
+                    
+                    if self.rect.right >= enm.rect.left:
+                        self.game.screen.game_over()
+
+                    elif self.rect.left <= enm.rect.right:
+                        self.game.screen.game_over()
+
+
 
         # check if player collide a platform when it's running
 
@@ -150,7 +161,7 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         if keys[pygame.K_LEFT]:
 
             # Verify if is the last image of the sprite animation, if it was restart the counter
-            if self.counter_left == 7:
+            if self.counter_left == 8:
                 self.counter_left = 0
 
             #Update the player image with the correct image, to give the sensation of movement
@@ -166,7 +177,7 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         #If right key pressed
         if keys[pygame.K_RIGHT]:
             # Verify if is the last image of the sprite animation, if it was restart the counter
-            if self.counter_right == 7:
+            if self.counter_right == 8:
                 self.counter_right = 0
 
             #Update the player image with the correct image, to give the sensation of movement

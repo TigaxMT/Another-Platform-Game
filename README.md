@@ -7,8 +7,8 @@ In Future the game will be an endless run RPG game, with mobs and score. And wil
 
 - [x] Improve base_platform sprite movement;
 - [x] Improve the platform collision;
-- [x] Draw a better sprite player with a sword;
-- [x] Draw the sprite player sword atack;
+- [ ] Draw a better sprite player with a sword;
+- [ ] Draw the sprite player sword atack;
 - [ ] Add new sound effects for jump , walk , atack etc;
 - [x] Add a new sound for the game menu;
 - [ ] Improve the code for better performance;
