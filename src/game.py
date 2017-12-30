@@ -89,6 +89,7 @@ class Game:
 
         self.playing = True
 
+        self.level.score = 0
         self.level.initSprites()
 
         # Main Loop
@@ -172,8 +173,8 @@ class Game:
 
         self.level.all_sprites.draw(self.screen.surface)
 
-        #Draw FPS
-        self.level.showFPS()
+        #Draw Score
+        self.level.showScore()
 
         # after drawing everything, flip(update) the display
         pygame.display.flip()

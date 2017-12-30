@@ -104,6 +104,9 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
                 for enm in self.game.level.enemies:
                     if self.rect.colliderect(enm.rect):
                         if self.rect.midbottom >= plat.rect.midtop:
+                            self.vel.y = 0
+                            self.vel.y = -15
+                            self.game.level.score += 1
                             enm.kill()
 
 
@@ -116,9 +119,24 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
                 if self.rect.colliderect(enm.rect):
                     
                     if self.rect.right >= enm.rect.left:
+                        
+                        for i in range(0,8):
+                            self.image = pygame.image.load(
+                                        PlayerSprites.PLAYER_IMAGE_DEAD[i]).convert_alpha()
+                            self.game.draw()
+                            pygame.time.delay(100)
+                            
                         self.game.screen.game_over()
 
                     elif self.rect.left <= enm.rect.right:
+                        
+                        for i in range(0,8):
+                            self.image = pygame.image.load(
+                                        PlayerSprites.PLAYER_IMAGE_DEAD[i]).convert_alpha()
+                            
+                            self.game.draw()
+                            pygame.time.delay(100)
+                            
                         self.game.screen.game_over()
 
 

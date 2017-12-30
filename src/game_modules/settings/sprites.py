@@ -31,6 +31,8 @@ class PlayerSprites:
     PLAYER_IMAGE_LIST_RIGHT = [
         "sprites/Run_right (%i).png" % i for i in range(1, 10)]
     PLAYER_IMAGE_STOPPED = ["sprites/Idle (%i).png" % i for i in range(1, 10)]
+    
+    PLAYER_IMAGE_DEAD = ["sprites/Dead (%i).png" % i for i in range(0, 9)]
 
 
 class PlatformSprites:

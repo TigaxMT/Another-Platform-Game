@@ -42,8 +42,8 @@ class LevelInfinite:
         self.text_surf = None
         self.text_rect = None
 
-        #Variable to store FPS
-        self.fps = 0.0
+        #Variable to store Score
+        self.score = 0
 
         self.side_collide = False
 
@@ -62,7 +62,7 @@ class LevelInfinite:
         self.small_text = pygame.font.SysFont(None, 40)
 
         self.text_surf, self.text_rect = self.game.screen.widgets.text_objects(
-            "FPS: " + str(self.fps), self.small_text, GameColors.BLACK)
+            "FPS: " + str(self.score), self.small_text, GameColors.BLACK)
     
     def initSprites(self):
 
@@ -171,15 +171,12 @@ class LevelInfinite:
                         self.base.add(base)
                         self.all_sprites.add(base)
  
-    def showFPS(self):  # Show FPS on screen
-
-        #Update FPS variable
-        self.fps = round(self.game.clock.get_fps())
-
-        #Create and draw a surface and rectangle for the FPS text
+    def showScore(self):  # Show FPS on screen
+        
+        #Create and draw a surface and rectangle for the Score text
         self.small_text = pygame.font.SysFont(None, 40)
         self.text_surf, self.text_rect = self.game.screen.widgets.text_objects(
-            "FPS: " + str(self.fps), self.small_text, GameColors.BLACK)
+            "Score: " + str(self.score), self.small_text, GameColors.BLACK)
         self.text_rect.x = 30
         self.text_rect.y = 30
         self.game.screen.surface.blit(self.text_surf, self.text_rect)
