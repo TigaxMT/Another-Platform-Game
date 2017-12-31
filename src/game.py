@@ -158,7 +158,7 @@ class Game:
 
             # check if any key is pressed
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
+                if event.key == pygame.K_UP:
                     self.player.jump()
                 if event.key == pygame.K_ESCAPE:
                     if self.pause == True:

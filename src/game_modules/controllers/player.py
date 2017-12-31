@@ -174,6 +174,15 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
 
         #Store all the keys pressed
         keys = pygame.key.get_pressed()
+        
+        #If Space bar pressed
+        if keys[pygame.K_SPACE]:
+            for i in range(0,8):
+                self.image = pygame.image.load(
+                PlayerSprites.PLAYER_IMAGE_ATTACK[i]).convert_alpha()
+
+                self.game.draw()
+                pygame.time.delay(50)
 
         #If left key pressed
         if keys[pygame.K_LEFT]:

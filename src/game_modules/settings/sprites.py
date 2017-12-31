@@ -27,25 +27,28 @@ class PlayerSprites:
         Player sprites
     """
     PLAYER_IMAGE_LIST_LEFT = [
-        "sprites/Run_left (%i).png" % i for i in range(1, 10)]
-    PLAYER_IMAGE_LIST_RIGHT = [
-        "sprites/Run_right (%i).png" % i for i in range(1, 10)]
-    PLAYER_IMAGE_STOPPED = ["sprites/Idle (%i).png" % i for i in range(1, 10)]
-    
-    PLAYER_IMAGE_DEAD = ["sprites/Dead (%i).png" % i for i in range(0, 9)]
+        "sprites/Player/Run_left (%i).png" % i for i in range(1, 10)]
 
+    PLAYER_IMAGE_LIST_RIGHT = [
+        "sprites/Player/Run_right (%i).png" % i for i in range(1, 10)]
+
+    PLAYER_IMAGE_STOPPED = ["sprites/Player/Idle (%i).png" % i for i in range(1, 10)]
+    
+    PLAYER_IMAGE_DEAD = ["sprites/Player/Dead (%i).png" % i for i in range(0, 9)]
+
+    PLAYER_IMAGE_ATTACK = ["sprites/Player/Attack (%i).png" % i for i in range(0, 9)]
 
 class PlatformSprites:
     """
         Enviroment sprites
     """
-    BACKGROUND = ["sprites/BG.png"]
-    PLATFORMS = ["sprites/platform.png"]
+    BACKGROUND = ["sprites/Backgrounds/BG.png"]
+    PLATFORMS = ["sprites/Assets/platform.png"]
     ASSETS = [
-        "sprites/Bush (1).png", "sprites/Bush (2).png", "sprites/Bush (3).png",
-        "sprites/Bush (4).png", "sprites/Mushroom_1.png", "sprites/Mushroom_2.png",
-        "sprites/Stone.png", "sprites/Tree_2.png", "sprites/Tree_3.png", "sprites/Sign_2.png"]
-    BASE = ["sprites/base.png"]
+        "sprites/Assets/Bush (1).png", "sprites/Assets/Bush (2).png", "sprites/Assets/Bush (3).png",
+        "sprites/Assets/Bush (4).png", "sprites/Assets/Mushroom_1.png", "sprites/Assets/Mushroom_2.png",
+        "sprites/Assets/Stone.png", "sprites/Assets/Tree_2.png", "sprites/Assets/Tree_3.png", "sprites/Assets/Sign_2.png"]
+    BASE = ["sprites/Assets/base.png"]
     SAMPLE = ["sprites/sample.png"]
 
 class EnemySprites:
@@ -53,6 +56,6 @@ class EnemySprites:
         Enemy sprites
     """
     ENEMY_IMAGE_LIST_LEFT = [
-        "sprites/Run_left (%i).png" % i for i in range(1, 10)]
+        "sprites/Player/Run_left (%i).png" % i for i in range(1, 10)]
     ENEMY_IMAGE_LIST_RIGHT = [
-        "sprites/Run_right (%i).png" % i for i in range(1, 10)]
+        "sprites/Player/Run_right (%i).png" % i for i in range(1, 10)]
