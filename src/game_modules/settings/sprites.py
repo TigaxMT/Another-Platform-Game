@@ -36,7 +36,9 @@ class PlayerSprites:
     
     PLAYER_IMAGE_DEAD = ["sprites/Player/Dead (%i).png" % i for i in range(0, 9)]
 
-    PLAYER_IMAGE_ATTACK = ["sprites/Player/Attack (%i).png" % i for i in range(0, 9)]
+    PLAYER_IMAGE_ATTACK_RIGHT = ["sprites/Player/Attack_Right (%i).png" % i for i in range(0, 9)]
+
+    PLAYER_IMAGE_ATTACK_LEFT = ["sprites/Player/Attack_Left (%i).png" % i for i in range(0, 9)]
 
 class PlatformSprites:
     """

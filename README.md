@@ -7,8 +7,8 @@ In Future the game will be an endless run RPG game, with mobs and score. And wil
 
 - [x] Improve base_platform sprite movement;
 - [x] Improve the platform collision;
-- [ ] Draw a better sprite player with a sword;
-- [ ] Draw the sprite player sword atack;
+- [x] Draw a better sprite player with a sword;
+- [x] Draw the sprite player sword atack;
 - [ ] Add new sound effects for jump , walk , atack etc;
 - [x] Add a new sound for the game menu;
 - [ ] Improve the code for better performance;
@@ -20,11 +20,15 @@ In Future the game will be an endless run RPG game, with mobs and score. And wil
 
 ---
 
+## Warning before compiling
+
+For the game running well, you need to use python3.6 or higher
+
 ## Compiling
 
 It is easy to run the game.
 
-You need to have installed python3.x or python2.x
+You need to have installed python3.6 or higher
 
 Open a terminal and write the next commands:
 
@@ -32,20 +36,22 @@ Open a terminal and write the next commands:
 
 * Fedora: ` sudo dnf install python3`
 
+Verify if the version 3 is the 3.6 if not please download him of the official python website! 
+
 After install python you need to install pygame with pip
 
 If you use python3:
 ` pip3 install --user pygame`
 
-If you use pyton2:
-` pip install --user pygame`
+Or if you compile python3.6:
+` python3.6 -m pip install pygame --user`
 
 (In Linux): Now follow the next instructions
 
 * (1) Open a terminal on the directory where you want to run the game
 * (2) Clone the repository: `git clone https://github.com/TigaxMT/Another-Platform-Game.git`
 * (3) Now do a cd into the folder: `cd Another-Platform-Game/`
-* (4) Write this command on terminal: ` python3 game.py` or if you use python2 ` python game.py`
+* (4) Write this command on terminal: ` python3 game.py` or ` python3.6 game.py`
 * (5) Enjoy!  
 
 ## Credits

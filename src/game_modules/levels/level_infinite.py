@@ -45,6 +45,9 @@ class LevelInfinite:
         #Variable to store Score
         self.score = 0
 
+        #Max value of spawned enemies
+        self.max_enemies = 0
+
         self.side_collide = False
 
         #Create all needed sprite groups
@@ -81,7 +84,11 @@ class LevelInfinite:
     def randEntities(self,entity):
         
         if entity == "Enemy":
-            while len(self.enemies) < 1:
+
+            if self.max_enemies >= 4:
+                self.max_enemies = 0
+
+            while len(self.enemies) < (1 + self.max_enemies):
 
                 #Load the image: the Enemy class will load to get the height for spawn correctly the assets
                 img = pygame.image.load(

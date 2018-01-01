@@ -107,6 +107,7 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
                             self.vel.y = 0
                             self.vel.y = -15
                             self.game.level.score += 1
+                            self.game.level.max_enemies += 1
                             enm.kill()
 
 
@@ -116,8 +117,7 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         if self.pos.y == PlatformSettings.HEIGHT - 71:
             
             for enm in self.game.level.enemies:
-                if self.rect.colliderect(enm.rect):
-                    
+                if self.rect.colliderect(enm.rect):        
                     if self.rect.right >= enm.rect.left:
                         
                         for i in range(0,8):
@@ -177,12 +177,35 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         
         #If Space bar pressed
         if keys[pygame.K_SPACE]:
-            for i in range(0,8):
-                self.image = pygame.image.load(
-                PlayerSprites.PLAYER_IMAGE_ATTACK[i]).convert_alpha()
+            
+            # Animation of player attack
+            if self.direc == 'left':
+                for i in range(0,8):
+                    self.image = pygame.image.load(
+                    PlayerSprites.PLAYER_IMAGE_ATTACK_LEFT[i]).convert_alpha()
 
-                self.game.draw()
-                pygame.time.delay(50)
+                    self.game.draw()
+                    pygame.time.delay(50)
+            else:
+                for i in range(0,8):
+                    self.image = pygame.image.load(
+                    PlayerSprites.PLAYER_IMAGE_ATTACK_RIGHT[i]).convert_alpha()
+
+                    self.game.draw()
+                    pygame.time.delay(50)
+        
+            # Verify if player hit an enemy with the sword attack, if yes the enemy will be killed
+            if self.pos.y == PlatformSettings.HEIGHT - 71:
+                for enm in self.game.level.enemies:
+                    if self.direc == 'right' and (enm.rect.x - self.rect.x) <= 55 and (enm.rect.x - self.rect.x) >= 1:
+                        self.game.level.score += 1
+                        self.game.level.max_enemies += 1
+                        enm.kill()
+                    elif self.direc == 'left' and (self.rect.x - enm.rect.x) <= 55 and (self.rect.x - enm.rect.x) >= 1:
+                        self.game.level.score += 1
+                        self.game.level.max_enemies += 1
+                        enm.kill()
+        
 
         #If left key pressed
         if keys[pygame.K_LEFT]:

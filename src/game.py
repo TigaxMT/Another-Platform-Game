@@ -89,7 +89,9 @@ class Game:
 
         self.playing = True
 
+        # Reinitialize level variables
         self.level.score = 0
+        self.level.max_enemies = 0
         self.level.initSprites()
 
         # Main Loop
