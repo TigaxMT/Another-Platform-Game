@@ -9,7 +9,7 @@ In Future the game will be an endless run RPG game, with mobs and score. And wil
 - [x] Improve the platform collision;
 - [x] Draw a better sprite player with a sword;
 - [x] Draw the sprite player sword atack;
-- [ ] Add new sound effects for jump , walk , atack etc;
+- [x] Add new sound effects for jump , walk , atack etc;
 - [x] Add a new sound for the game menu;
 - [ ] Improve the code for better performance;
 - [ ] Improve the code for better programming patterns;
@@ -54,13 +54,13 @@ Or if you compile python3.6:
 * (4) Write this command on terminal: ` python3 game.py` or ` python3.6 game.py`
 * (5) Enjoy!  
 
-## Game Controls
+## Controls
 
-Jump = Arrow Up (Directional Key Up)
+Jump = Up Arrow
 
-Right = Arrow Right
+Right = Right Arrow
 
-Left = Arrow Left
+Left = Left Arrow
 
 Attack = SpaceBar
 
