@@ -60,6 +60,10 @@ class Screen:
         self.TextSurf, TextRect = self.widgets.text_objects(
             "Initialize with Random data", self.largeText, GameColors.BLACK)
 
+        #GameOver sound
+        self.game_over_sound = pygame.mixer.Sound(GameAudios.GAMEOVER)
+        self.game_over_sound.set_volume(0.6)
+
     def show_start_screen(self):  # game splash/start screen
 
         # Kill all sprites if they exists
@@ -105,6 +109,8 @@ class Screen:
 
     def game_over(self):
         #When player dies
+
+        pygame.mixer.Sound.play(self.game_over_sound)
 
         pygame.mixer.music.stop()
         self.surface.fill(GameColors.WHITE)

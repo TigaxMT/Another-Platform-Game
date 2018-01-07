@@ -54,6 +54,18 @@ Or if you compile python3.6:
 * (4) Write this command on terminal: ` python3 game.py` or ` python3.6 game.py`
 * (5) Enjoy!  
 
+## Game Controls
+
+Jump = Arrow Up (Directional Key Up)
+
+Right = Arrow Right
+
+Left = Arrow Left
+
+Attack = SpaceBar
+
+Pause = ESC
+
 ## Credits
 
 * Programmers: Tiago Martins([TigaxMT](https://github.com/TigaxMT "TigaxMT Profile")) & Kelvin Ferreira([k30v1n](https://github.com/k30v1n "k30v1n Profile"))

@@ -57,8 +57,16 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         self.direc = "right"
 
         #Jump sound
-        self.jump_sound = pygame.mixer.Sound(GameAudios.PLAYER_JUMP[0])
+        self.jump_sound = pygame.mixer.Sound(GameAudios.PLAYER_JUMP)
         self.jump_sound.set_volume(0.6)
+
+        #Sword sound
+        self.sword_sound = pygame.mixer.Sound(GameAudios.SWORD)
+        self.sword_sound.set_volume(0.6)
+
+        #Enemy Die sound
+        self.enemy_die_sound = pygame.mixer.Sound(GameAudios.ENEMY_DIE)
+        self.enemy_die_sound.set_volume(0.6)
 
     def jump(self):  # jump only if standing on a platform
         #Increment the player rectangle position for a better collision detection
@@ -104,6 +112,7 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
                 for enm in self.game.level.enemies:
                     if self.rect.colliderect(enm.rect):
                         if self.rect.midbottom >= plat.rect.midtop:
+                            pygame.mixer.Sound.play(self.enemy_die_sound)
                             self.vel.y = 0
                             self.vel.y = -15
                             self.game.level.score += 1
@@ -178,6 +187,8 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         #If Space bar pressed
         if keys[pygame.K_SPACE]:
             
+            pygame.mixer.Sound.play(self.sword_sound)
+
             # Animation of player attack
             if self.direc == 'left':
                 for i in range(0,8):
@@ -200,10 +211,12 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
                     if self.direc == 'right' and (enm.rect.x - self.rect.x) <= 55 and (enm.rect.x - self.rect.x) >= 1:
                         self.game.level.score += 1
                         self.game.level.max_enemies += 1
+                        pygame.mixer.Sound.play(self.enemy_die_sound)
                         enm.kill()
                     elif self.direc == 'left' and (self.rect.x - enm.rect.x) <= 55 and (self.rect.x - enm.rect.x) >= 1:
                         self.game.level.score += 1
                         self.game.level.max_enemies += 1
+                        pygame.mixer.Sound.play(self.enemy_die_sound)
                         enm.kill()
         
 

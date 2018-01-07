@@ -62,11 +62,36 @@ class Game:
         self.clock = pygame.time.Clock()
         self.pause = False
 
+        #Variables for playlist music
+        self.music_number = 0
+        self.sum = False
+        self.playlist = list()
+
+        self.playlist.append(GameAudios.MUSIC[0])
+        self.playlist.append(GameAudios.MUSIC[1])
+
     def show_menu(self):
         """
             Show the main menu
         """
         self.screen.show_start_screen()
+
+    def music_playlist(self): # Looping a music playlist
+
+        if pygame.mixer.music.get_busy() == False:
+            
+            if self.sum == True:
+                self.music_number += 1
+            else:
+                self.sum = True
+            
+            pygame.mixer.music.load(self.playlist[self.music_number])
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play()
+
+            if self.music_number == len(self.playlist)-1:
+                self.music_number = 0
+                self.sum = False
 
     def new(self):  # Start a new game
 
@@ -78,9 +103,7 @@ class Game:
         pygame.mixer.music.stop()
 
         #Loading and playing the main soundtrack
-        pygame.mixer.music.load(GameAudios.MUSIC[0])
-        pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(-1)
+        self.music_playlist()
 
         #Call the main loop function
         self.run()
@@ -100,6 +123,7 @@ class Game:
             self.events()
             self.update()
             self.draw()
+            self.music_playlist()
 
     def update(self):  # Game Loop - Update
 
