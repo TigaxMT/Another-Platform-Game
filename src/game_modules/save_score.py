@@ -2,17 +2,17 @@ import os
 
 
 class Save_Score:
-    def __init__(self,score=None):
+    def __init__(self,score="0"):
         self.score = score
 
     def writeScore(self,score):
 
-        old_score = self.readScore()
+        self.readScore()
 
-        old_score = int(old_score)
+        self.score = int(self.score)
         score = int(score)
 
-        if score > old_score:
+        if score > self.score:
             file = open("Score.txt","w")
 
             file.write(str(score))
@@ -27,8 +27,8 @@ class Save_Score:
             self.score = file.read()
 
             file.close()
-        
-        else:
-            pass
 
+        else:
+            self.score = "0"
+        
         return self.score
