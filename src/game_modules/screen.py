@@ -26,6 +26,7 @@ import random
 import pygame
 
 from game_modules.widgets import Widgets
+from game_modules.save_score import Save_Score
 
 #settings
 from game_modules.settings.colors import GameColors
@@ -101,6 +102,10 @@ class Screen:
                                 GameColors.GREEN, GameColors.BRIGHT_GREEN, self.game.new)
             self.widgets.button("Credits", ((150 + 550) / 2),
                                 450, 100, 50, GameColors.DARK_YELLOW, GameColors.YELLOW, self.credits)
+            
+            self.widgets.button("Best Score", ((150 + 550) / 2),
+                                525, 100 ,50 , GameColors.BLUE , GameColors.LIGHTBLUE, self.maxScore)
+
             self.widgets.button("Quit", 550, 450, 100, 50,
                                 GameColors.RED, GameColors.BRIGHT_RED, self.game.quit_game)
 
@@ -109,6 +114,8 @@ class Screen:
 
     def game_over(self):
         #When player dies
+
+        self.game.save_score.writeScore(self.game.level.score)
 
         pygame.mixer.Sound.play(self.game_over_sound)
 
@@ -254,3 +261,40 @@ class Screen:
 
             pygame.display.flip()
             self.game.clock.tick(PlatformSettings.FPS)
+
+    def maxScore(self): # Show player Best Score
+
+        #Best Score function main loop
+        while True:
+            for event in pygame.event.get():
+                #Check if Quit event is called
+                if event.type == pygame.QUIT:
+                    self.game.quit_game()
+
+            #Draw the sample image
+            self.surface.blit(self.bg_img, self.bg_img_rect)
+
+            self.largeText = pygame.font.SysFont(None, 40)
+            self.TextSurf, self.TextRect = self.widgets.text_objects(
+                        "Best Score: " + str(self.game.save_score.readScore()), self.largeText, 
+                        GameColors.BLACK)
+
+
+            #Draw the Best Score text
+            self.surface.blit(self.TextSurf, self.TextRect)
+
+            #Create a surface and rectangle for the Copyright text
+            self.largeText = pygame.font.SysFont(None, 30)
+            self.TextSurf, self.TextRect = self.widgets.text_objects(
+                "Copyright © 2017  Tiago Martins", self.largeText, GameColors.BLACK)
+            self.TextRect.center = (
+                (PlatformSettings.WIDTH / 2), (PlatformSettings.HEIGHT - 150))
+            self.surface.blit(self.TextSurf, self.TextRect)
+
+            #Create the Main Menu button
+            self.widgets.button("Main Menu", ((PlatformSettings.WIDTH - 150) / 2), (PlatformSettings.HEIGHT - 90),
+                                100, 50, GameColors.BLUE, GameColors.LIGHTBLUE, self.show_start_screen)
+
+            pygame.display.flip()
+            self.game.clock.tick(PlatformSettings.FPS)
+        

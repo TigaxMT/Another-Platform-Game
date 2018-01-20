@@ -22,6 +22,7 @@ import pygame
 #Game screen & levels
 from game_modules.screen import Screen
 from game_modules.levels.level_infinite import LevelInfinite
+from game_modules.save_score import Save_Score
 
 #Game controllers
 from game_modules.controllers.player import Player
@@ -52,6 +53,7 @@ class Game:
         self.screen = Screen(self)
         self.player = Player(self)
         self.level = LevelInfinite(self)
+        self.save_score = Save_Score(self)
 
         #Change the game icon and title
         img_icon = pygame.image.load(
