@@ -100,14 +100,17 @@ class Screen:
             #Create start, credits and quit buttons
             self.widgets.button("Play!", 150, 450, 100, 50,
                                 GameColors.GREEN, GameColors.BRIGHT_GREEN, self.game.new)
+
             self.widgets.button("Credits", ((150 + 550) / 2),
                                 450, 100, 50, GameColors.DARK_YELLOW, GameColors.YELLOW, self.credits)
             
+            self.widgets.button("Quit", 550, 450, 100, 50,
+                                GameColors.RED, GameColors.BRIGHT_RED, self.game.quit_game)
+
             self.widgets.button("Best Score", ((150 + 550) / 2),
                                 525, 100 ,50 , GameColors.BLUE , GameColors.LIGHTBLUE, self.maxScore)
 
-            self.widgets.button("Quit", 550, 450, 100, 50,
-                                GameColors.RED, GameColors.BRIGHT_RED, self.game.quit_game)
+            self.game.main_menu = True
 
             pygame.display.flip()
             self.game.clock.tick(PlatformSettings.FPS)

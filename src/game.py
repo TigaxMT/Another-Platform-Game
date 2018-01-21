@@ -43,6 +43,7 @@ class Game:
     def __init__(self):
         # Defining class variables
         self.playing = None
+        self.main_menu = False
 
         #Initialize pygame and mixer
         pygame.mixer.pre_init(44100, -16, 1, 512)
@@ -97,6 +98,8 @@ class Game:
                 self.sum = False
 
     def new(self):  # Start a new game
+
+        self.main_menu = False
 
         # Kill all sprites if they exists
         if len(self.level.all_sprites) != 0:
@@ -215,8 +218,9 @@ class Game:
 
     def quit_game(self):  # Close the Game
 
-        pygame.quit()
-        quit()
+        if self.main_menu:
+            pygame.quit()
+            quit()
 
 
 # Create an Object of the Game Class
