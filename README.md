@@ -3,6 +3,11 @@ A Platform Game written in Python with PyGame
 
 In Future the game will be an endless run RPG game, with mobs and score. And will has 2 modes to play: Player vs PC and PC vs PC , PC will be the Neural Network
 
+# Warning
+
+This project will no longer be continued. Any errors or functionality that you want to correct or implement will be welcome, but I will not work on this project anymore because I am focused on web development. Thanks for everything :)
+
+
 # Demo Gif
 
 * Sorry for the lag but my PC is very , very low. Probably in your's should run clear, if is not a 1.4GHz Dual core like mine :D
