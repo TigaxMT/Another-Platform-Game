@@ -58,6 +58,6 @@ class EnemySprites:
         Enemy sprites
     """
     ENEMY_IMAGE_LIST_LEFT = [
-        "sprites/Player/Run_left (%i).png" % i for i in range(1, 10)]
+        "sprites/Enemy/Run_left (%i).png" % i for i in range(1, 10)]
     ENEMY_IMAGE_LIST_RIGHT = [
-        "sprites/Player/Run_right (%i).png" % i for i in range(1, 10)]
+        "sprites/Enemy/Run_right (%i).png" % i for i in range(1, 10)]

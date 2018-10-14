@@ -238,12 +238,15 @@ class Screen:
 
                 #Some special positions for some credtis text, for all text stay align
                 if GameCredits.CREDITS[i] == "Kelvin Ferreira":
+
                     self.TextRect.x = 215
                     self.TextRect.y = height
-		elif GameCredits.CREDITS[i] == "Tiago Martins":
+                elif GameCredits.CREDITS[i] == "Tiago Martins":
+
                     self.TextRect.x = 160
                     self.TextRect.y = height
                 else:
+
                     self.TextRect.x = 10
                     self.TextRect.y = height
 
