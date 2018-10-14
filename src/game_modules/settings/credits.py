@@ -1,7 +1,7 @@
 """
-    A simple Game to test neural networks , machine learning etc
+    A simple platform game written in Python
 
-    Copyright (C) 2017  Tiago Martins, Kelvin Ferreira
+    Copyright (C) 2017-2018  Tiago Martins, Kelvin Ferreira
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,5 +28,5 @@ class GameCredits:
     """
     # Credits
     CREDITS = ["Programmers: Tiago Martins", "Kelvin Ferreira",
-               "Sounds: Bruna Silva (Girlfriend of Tiago Martins)",
-               "Designers: Zuhria Alfitra"]
+               "Sounds: Bruna Silva",
+               "Designers: Zuhria Alfitra", "Tiago Martins"]

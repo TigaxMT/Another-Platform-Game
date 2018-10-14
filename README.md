@@ -1,12 +1,5 @@
-# Another-Platform-Game
+# Sword'N'Jump
 A Platform Game written in Python with PyGame
-
-In Future the game will be an endless run RPG game, with mobs and score. And will has 2 modes to play: Player vs PC and PC vs PC , PC will be the Neural Network
-
-# Warning
-
-This project will no longer be continued. Any errors or functionality that you want to correct or implement will be welcome, but I will not work on this project anymore because I am focused on web development. Thanks for everything :)
-
 
 # Demo Gif
 
@@ -60,8 +53,8 @@ Or if you compile python3.6:
 (In Linux): Now follow the next instructions
 
 * (1) Open a terminal on the directory where you want to run the game
-* (2) Clone the repository: `git clone https://github.com/TigaxMT/Another-Platform-Game.git`
-* (3) Now do a cd into the folder: `cd Another-Platform-Game/`
+* (2) Clone the repository: `git clone https://github.com/TigaxMT/Sword-N-Jump.git`
+* (3) Now do a cd into the folder: `cd Sword-N-Jump/src/`
 * (4) Write this command on terminal: ` python3 game.py` or ` python3.6 game.py`
 * (5) Enjoy!  
 
@@ -87,6 +80,6 @@ Pause = ESC
 
 # Donations
 
-* If you liked the project and would like to contribute monetarily, you can make a donation of the amount you want through   Paypal. Thank you so much for everything. I , Tiago Martins, need a new computer because I have a 1.4Ghz Dual core laptop and it's not very powerful for developing my projects neither for my jobs.
+* If you liked the project and would like to contribute monetarily, you can make a donation of the amount you want through   Paypal. Thank you so much for everything.
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RS4CKRLKDTKFJ)

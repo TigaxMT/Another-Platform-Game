@@ -1,7 +1,7 @@
 """
-    A simple Game to test neural networks , machine learning etc
+    A simple platform game written in Python
 
-    Copyright (C) 2017  Tiago Martins, Kelvin Ferreira
+    Copyright (C) 2017-2018  Tiago Martins, Kelvin Ferreira
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,5 +26,5 @@ class GameTexts:
         Define texts about the game
     """
     # Constant string for a class
-    TITLE = "Another Platform Game"
+    TITLE = "Sword'N'Jump"
 

@@ -1,7 +1,7 @@
 """
-    A simple Game to test neural networks , machine learning etc
+    A simple platform game written in Python
 
-    Copyright (C) 2017  Tiago Martins, Kelvin Ferreira
+    Copyright (C) 2017-2018  Tiago Martins, Kelvin Ferreira
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -223,12 +223,12 @@ class Screen:
                     self.TextSurf, self.TextRect = self.widgets.text_objects(
                         GameCredits.CREDITS[i], self.largeText, self.clr_prog)
 
-                if GameCredits.CREDITS[i] == "Sounds: Bruna Silva (Girlfriend of Tiago Martins)":
+                if GameCredits.CREDITS[i] == "Sounds: Bruna Silva":
                     self.largeText = pygame.font.SysFont(None, 40)
                     self.TextSurf, self.TextRect = self.widgets.text_objects(
                         GameCredits.CREDITS[i], self.largeText, self.clr_sound)
 
-                if GameCredits.CREDITS[i] == "Designers: Zuhria Alfitra":
+                if GameCredits.CREDITS[i] == "Designers: Zuhria Alfitra" or "Tiago Martins":
                     self.largeText = pygame.font.SysFont(None, 40)
                     self.TextSurf, self.TextRect = self.widgets.text_objects(
                         GameCredits.CREDITS[i], self.largeText, self.clr_design)
@@ -240,6 +240,9 @@ class Screen:
                 if GameCredits.CREDITS[i] == "Kelvin Ferreira":
                     self.TextRect.x = 215
                     self.TextRect.y = height
+		elif GameCredits.CREDITS[i] == "Tiago Martins":
+                    self.TextRect.x = 160
+                    self.TextRect.y = height
                 else:
                     self.TextRect.x = 10
                     self.TextRect.y = height
@@ -250,7 +253,7 @@ class Screen:
             #Create a surface and rectangle for the Copyright text
             self.largeText = pygame.font.SysFont(None, 30)
             self.TextSurf, self.TextRect = self.widgets.text_objects(
-                " Copyright © 2017  Tiago Martins", self.largeText, GameColors.BLACK)
+                " Copyright (C) 2017-2018  Tiago Martins", self.largeText, GameColors.BLACK)
             self.TextRect.center = (
                 (PlatformSettings.WIDTH / 2), (PlatformSettings.HEIGHT - 150))
             self.surface.blit(self.TextSurf, self.TextRect)
@@ -289,7 +292,7 @@ class Screen:
             #Create a surface and rectangle for the Copyright text
             self.largeText = pygame.font.SysFont(None, 30)
             self.TextSurf, self.TextRect = self.widgets.text_objects(
-                "Copyright © 2017  Tiago Martins", self.largeText, GameColors.BLACK)
+                "Copyright (C) 2017-2018  Tiago Martins", self.largeText, GameColors.BLACK)
             self.TextRect.center = (
                 (PlatformSettings.WIDTH / 2), (PlatformSettings.HEIGHT - 150))
             self.surface.blit(self.TextSurf, self.TextRect)
