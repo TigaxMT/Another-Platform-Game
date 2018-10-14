@@ -79,11 +79,11 @@ Pause = ESC
 
 ## Credits
 
-* Programmers: Tiago Martins([TigaxMT](https://github.com/TigaxMT "TigaxMT Profile")) & Kelvin Ferreira([k30v1n](https://github.com/k30v1n "k30v1n Profile"))
+* Programmers: Tiago Martins([Twitter](https://twitter.com/ttiago127)) & Kelvin Ferreira([Twitter](https://twitter.com/k30v1n))
 
-* Sounds: Bruna Silva(Girlfriend of Tiago Martins)
+* Sounds: Bruna Silva([SoundCloud](https://soundcloud.com/bruzzounds)|[YouTube](https://www.youtube.com/channel/UCrLNM0hqYuBzvpirB80SnRQ)|[Twitter](https://twitter.com/BruZZounds))
 
-* Design: Zuhria Alfitra a.k.a pzUH - https://www.gameart2d.com/
+* Design: Zuhria Alfitra a.k.a pzUH([Website](https://www.gameart2d.com/))
 
 # Donations
 
