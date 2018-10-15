@@ -30,6 +30,23 @@ For the game running well, you need to use python3.6 or higher
 
 ## Compiling
 
+To create an executable to double click and play instead of "Running in Python VM" always you want to play.
+
+(In Linux): Now follow the next instructions
+
+* (1) Open a terminal on the directory where you want to create game executable
+* (2) Clone the repository: `git clone https://github.com/TigaxMT/Sword-N-Jump.git`
+* (3) Now do a cd into the folder: `cd Sword-N-Jump/src/`
+* (4) Run the following command: `python3 setup.py build`
+* (5) cd into the build folder
+* (6) cd into the only folder inside of the build folder
+* (7) Now run this: `./game`
+* (8) Enjoy!
+
+You need only this 1 time , next time you only need to double click on the .exe or open a terminal inside the folder and run `./game`
+ 
+## Running in Python VM
+
 It is easy to run the game.
 
 You need to have installed python3.6 or higher

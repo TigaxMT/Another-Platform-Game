@@ -220,7 +220,6 @@ class Game:
 
         if self.main_menu:
             pygame.quit()
-            quit()
 
 
 # Create an Object of the Game Class
