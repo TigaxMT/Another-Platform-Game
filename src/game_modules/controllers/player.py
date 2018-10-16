@@ -252,6 +252,21 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
 
             self.counter_right += 1
             self.direc = 'right'
+        
+        if keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+            
+            for i in range(0,8):
+                
+                    self.image = pygame.image.load(
+                    PlayerSprites.PLAYER_IMAGE_BACKFLIP[i]).convert_alpha()
+
+                    self.game.draw()
+                    pygame.time.delay(50)
+            
+            #Put an negative(oposite for the right movement) constant acceleration to the player to give better physics
+            self.acc.x = -PlayerSettings.PLAYER_ACC
+            
+            self.direc = 'right'
 
         # apply friction to the acceleration
         self.acc.x += self.vel.x * PlayerSettings.PLAYER_FRICTION

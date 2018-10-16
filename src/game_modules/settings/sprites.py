@@ -35,6 +35,8 @@ class PlayerSprites:
     PLAYER_IMAGE_STOPPED = ["sprites/Player/Idle (%i).png" % i for i in range(1, 10)]
     
     PLAYER_IMAGE_DEAD = ["sprites/Player/Dead (%i).png" % i for i in range(0, 9)]
+    
+    PLAYER_IMAGE_BACKFLIP = ["sprites/Player/BackFlip (%i).png" % i for i in range(0, 9)]
 
     PLAYER_IMAGE_ATTACK_RIGHT = ["sprites/Player/Attack_Right (%i).png" % i for i in range(0, 9)]
 
