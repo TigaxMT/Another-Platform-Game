@@ -30,6 +30,9 @@ For the game running well, you need to use python3.6 or higher
 
 ## Compiling
 
+FIRST: Install cx_Freeze, if you already have pip3(because you need python3.6 or higher to run this game) installed,
+run this: `pip3 install cx_Freeze --user`
+
 To create an executable to double click and play instead of "Running in Python VM" always you want to play.
 
 (In Linux): Now follow the next instructions
@@ -43,7 +46,7 @@ To create an executable to double click and play instead of "Running in Python V
 * (7) Now run this: `./game`
 * (8) Enjoy!
 
-You need only this 1 time , next time you only need to double click on the .exe or open a terminal inside the folder and run `./game`
+You need to do this only 1 time , next time you only need to double click on the .exe or open a terminal inside the folder and run `./game`
  
 ## Running in Python VM
 
