@@ -18,12 +18,8 @@
 """
 
 import pygame
-import random
 
-from game_modules.settings.player import PlayerSettings
 from game_modules.settings.sprites import EnemySprites
-from game_modules.settings.platform import PlatformSettings
-from game_modules.settings.audio import GameAudios
 
 class Enemy(pygame.sprite.Sprite): # Creates a Enemy Sprite
     def __init__(self,x,y):
