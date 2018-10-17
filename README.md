@@ -102,4 +102,5 @@ Pause = ESC
 
 * If you liked the project and would like to contribute monetarily, you can make a donation of the amount you want through   Paypal. Thank you so much for everything.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d62fafde82be4aeb85e65d8b34fac2b2)](https://app.codacy.com/app/TigaxMT_2/Sword-N-Jump?utm_source=github.com&utm_medium=referral&utm_content=TigaxMT/Sword-N-Jump&utm_campaign=Badge_Grade_Dashboard)
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RS4CKRLKDTKFJ)
