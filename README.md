@@ -1,6 +1,8 @@
 # Sword'N'Jump
 A Platform Game written in Python with PyGame
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d62fafde82be4aeb85e65d8b34fac2b2)](https://app.codacy.com/app/TigaxMT_2/Sword-N-Jump?utm_source=github.com&utm_medium=referral&utm_content=TigaxMT/Sword-N-Jump&utm_campaign=Badge_Grade_Dashboard)
+
 # Demo Gif
 
 * Sorry for the lag but my PC is very , very low. Probably in your's should run clear, if is not a 1.4GHz Dual core like mine :D
