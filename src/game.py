@@ -49,7 +49,6 @@ class Game:
         pygame.mixer.pre_init(44100, -16, 1, 512)
         pygame.mixer.init()
         pygame.init()
-        
         # Initializing
         self.screen = Screen(self)
         self.player = Player(self)

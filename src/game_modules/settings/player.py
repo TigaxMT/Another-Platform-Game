@@ -17,10 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-"""
-    Player contants
-"""
-
+# Player contants
 class PlayerSettings:
     """
         Define how the player works in the game world

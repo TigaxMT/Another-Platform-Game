@@ -21,9 +21,6 @@ A Platform Game written in Python with PyGame
 *  [x] Improve the credits screen;
 *  [ ] Add a animations to the credits and menu screen;
 
-
----
-
 ## Warning before compiling
 
 For the game running well, you need to use python3.6 or higher

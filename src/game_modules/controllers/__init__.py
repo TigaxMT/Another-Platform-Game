@@ -17,6 +17,4 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-'''
-    Controllers folder is where the controllers scripts will be.
-'''
+#Controllers folder is where the controllers scripts will be.

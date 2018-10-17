@@ -18,10 +18,7 @@
 """
 
 
-"""
-    Widgets
-"""
-
+# Widgets
 import pygame
 from game_modules.settings.colors import GameColors
 
@@ -38,7 +35,8 @@ class Widgets:
         self.smallText = pygame.font.SysFont(None, 20)
         self.textSurf, self.textRect = self.text_objects(
             "Initialize with Random data", self.smallText, GameColors.BLACK)
-
+    
+    @classmethod
     def text_objects(self, text, font, color=GameColors.BLACK):
 
         # Creates Text Messages

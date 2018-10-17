@@ -17,10 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-"""
-    Strings contants
-"""
-
+# Strings contants
 class GameTexts:
     """
         Define texts about the game

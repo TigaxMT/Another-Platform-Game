@@ -26,7 +26,6 @@ import random
 import pygame
 
 from game_modules.widgets import Widgets
-from game_modules.save_score import Save_Score
 
 #settings
 from game_modules.settings.colors import GameColors
@@ -58,8 +57,8 @@ class Screen:
 
         #Define and initialize with random data the variable to manipulate and Draw Text Objects
         self.largeText = pygame.font.SysFont(None, 80)
-        self.TextSurf, TextRect = self.widgets.text_objects(
-            "Initialize with Random data", self.largeText, GameColors.BLACK)
+        self.TextSurf = self.widgets.text_objects(
+            "Initialize with Random data", self.largeText, GameColors.BLACK)[0]
 
         #GameOver sound
         self.game_over_sound = pygame.mixer.Sound(GameAudios.GAMEOVER)

@@ -18,10 +18,7 @@
 """
 
 
-"""
-    Constants for sprite animation
-"""
-
+# Constants for sprite animation
 class PlayerSprites:
     """
         Player sprites

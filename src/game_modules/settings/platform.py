@@ -18,10 +18,7 @@
 """
 
 
-"""
-    Define platform contants
-"""
-
+# Define platform contants
 class PlatformSettings:
     """
         Define some platform settings

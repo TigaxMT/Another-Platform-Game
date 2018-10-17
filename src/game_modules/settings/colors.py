@@ -17,9 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-"""
-    Define colors constants
-"""
+# Define colors constants
 import pygame
 
 # define colors

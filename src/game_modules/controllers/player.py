@@ -124,7 +124,6 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         # check if player collide an enemy when it's running
 
         if self.pos.y == PlatformSettings.HEIGHT - 71:
-            
             for enm in self.game.level.enemies:
                 if self.rect.colliderect(enm.rect):        
                     if self.rect.right >= enm.rect.left:

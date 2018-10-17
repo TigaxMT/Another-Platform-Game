@@ -23,7 +23,6 @@ from game_modules.settings.sprites import EnemySprites
 
 class Enemy(pygame.sprite.Sprite): # Creates a Enemy Sprite
     def __init__(self,x,y):
-        
         #Initialize the Sprite function
         pygame.sprite.Sprite.__init__(self)
 
@@ -31,7 +30,6 @@ class Enemy(pygame.sprite.Sprite): # Creates a Enemy Sprite
         self.counter_right = 0
         self.counter_left = 0
         self.counter_stopped = 0
-
         # Count the steps 
         self.steps_right = 0
         self.steps_left = 0
