@@ -5,6 +5,7 @@ A Platform Game written in Python with PyGame
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 [![Build Status](https://travis-ci.com/TigaxMT/Sword-N-Jump.svg?branch=master)](https://travis-ci.com/TigaxMT/Sword-N-Jump)
+[![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/ttiago127)
 
 # Demo Gif
 
