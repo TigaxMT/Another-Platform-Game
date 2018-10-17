@@ -9,17 +9,17 @@ A Platform Game written in Python with PyGame
 
 # Check List of things to do
 
-- [x] Improve base_platform sprite movement;
-- [x] Improve the platform collision;
-- [x] Draw a better sprite player with a sword;
-- [x] Draw the sprite player sword atack;
-- [x] Add new sound effects for jump , walk , atack etc;
-- [x] Add a new sound for the game menu;
-- [ ] Improve the code for better performance;
-- [ ] Improve the code for better programming patterns;
-- [x] Add assets like trees , stones , bush etc to the environment;
-- [x] Improve the credits screen;
-- [ ] Add a animations to the credits and menu screen;
+*  [x] Improve base_platform sprite movement;
+*  [x] Improve the platform collision;
+*  [x] Draw a better sprite player with a sword;
+*  [x] Draw the sprite player sword atack;
+*  [x] Add new sound effects for jump , walk , atack etc;
+*  [x] Add a new sound for the game menu;
+*  [ ] Improve the code for better performance;
+*  [ ] Improve the code for better programming patterns;
+*  [x] Add assets like trees , stones , bush etc to the environment;
+*  [x] Improve the credits screen;
+*  [ ] Add a animations to the credits and menu screen;
 
 
 ---
