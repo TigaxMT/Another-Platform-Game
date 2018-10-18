@@ -46,7 +46,7 @@ class Widgets:
         return textSurface, textSurface.get_rect()
 
     def button(self, msg, x, y, w, h, ic, ac, action=None):  # Create Buttons
-
+        pygame.init()
         #Store all the clicks and the positions of mouse
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()

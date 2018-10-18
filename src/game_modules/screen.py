@@ -142,7 +142,6 @@ class Screen:
                 #Check if Quit event is called
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    quit()
 
             #Create play and quit buttons
             self.widgets.button("Play Again", 150, 450, 100,

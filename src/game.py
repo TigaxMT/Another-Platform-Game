@@ -18,6 +18,7 @@
 """
 
 import pygame
+from sys import exit
 
 #Game screen & levels
 from game_modules.screen import Screen
@@ -219,6 +220,7 @@ class Game:
 
         if self.main_menu:
             pygame.quit()
+            exit(0)
 
 
 # Create an Object of the Game Class
