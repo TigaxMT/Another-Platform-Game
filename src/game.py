@@ -18,7 +18,7 @@
 """
 
 import pygame
-from sys import exit
+import sys
 
 #Game screen & levels
 from game_modules.screen import Screen
@@ -83,7 +83,6 @@ class Game:
     def music_playlist(self): # Looping a music playlist
 
         if pygame.mixer.music.get_busy() == False:
-            
             if self.sum == True:
                 self.music_number += 1
             else:
@@ -220,7 +219,7 @@ class Game:
 
         if self.main_menu:
             pygame.quit()
-            exit(0)
+            sys.exit(0)
 
 
 # Create an Object of the Game Class

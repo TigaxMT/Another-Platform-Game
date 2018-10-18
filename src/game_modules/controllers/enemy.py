@@ -40,7 +40,6 @@ class Enemy(pygame.sprite.Sprite): # Creates a Enemy Sprite
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-    
     def update(self):
         
         if self.steps_right < 100:

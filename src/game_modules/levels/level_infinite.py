@@ -35,7 +35,6 @@ from game_modules.settings.platform import PlatformSettings
 
 class LevelInfinite:
     def __init__(self,game):
-        
         self.game = game
 
         self.small_text = None

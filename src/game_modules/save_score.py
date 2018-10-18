@@ -49,5 +49,4 @@ class Save_Score:
 
         else:
             self.score = "0"
-        
         return self.score

@@ -88,7 +88,6 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         elif hits_base:
             self.vel.y = -20
             pygame.mixer.Sound.play(self.jump_sound)    
-            
     def sword_attack(self):
         
         # Only plays sword sound if the Space Key was pressed

@@ -18,10 +18,7 @@
 """
 
 
-"""
-    Screen module
-"""
-
+# Screen module
 import random
 import pygame
 
