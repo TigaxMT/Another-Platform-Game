@@ -52,6 +52,7 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         self.counter_right = 0
         self.counter_left = 0
         self.counter_stopped = 0
+        self.counter_attack = -1
 
         # direc variable is use for set the player direction when it is stopped
         self.direc = "right"
@@ -86,8 +87,64 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
 
         elif hits_base:
             self.vel.y = -20
-            pygame.mixer.Sound.play(self.jump_sound)
+            pygame.mixer.Sound.play(self.jump_sound)    
+            
+    def sword_attack(self):
+        
+        # Only plays sword sound if the Space Key was pressed
+        
+        if self.counter_attack == 0:
+            pygame.mixer.Sound.play(self.sword_sound)
+            
+         # Animation of player attack
+        if self.direc == 'left':
+            
+           # Verify if is the last image of the sprite animation, if it was restart the counter
+            if self.counter_attack == 8:
+                self.counter_attack = -1
+            
+            else:
+                #Update the player image with the correct image, to give the sensation of movement
+                self.image = pygame.image.load(
+                        PlayerSprites.PLAYER_IMAGE_ATTACK_LEFT[self.counter_attack]).convert_alpha()
+            
+                self.counter_attack += 1
+            
+                self.game.draw()
+                
+                pygame.time.delay(25)
 
+        else:
+           
+            # Verify if is the last image of the sprite animation, if it was restart the counter
+            if self.counter_attack == 8:
+                self.counter_attack = -1
+            else:
+                
+                #Update the player image with the correct image, to give the sensation of movement
+                self.image = pygame.image.load(
+                    PlayerSprites.PLAYER_IMAGE_ATTACK_RIGHT[self.counter_attack]).convert_alpha()
+                
+                self.counter_attack += 1
+                
+                self.game.draw()
+                
+                pygame.time.delay(25)
+    
+        # Verify if player hit an enemy with the sword attack, if yes the enemy will be killed
+        if self.pos.y == PlatformSettings.HEIGHT - 71:
+            for enm in self.game.level.enemies:
+                if self.direc == 'right' and (enm.rect.x - self.rect.x) <= 55 and (enm.rect.x - self.rect.x) >= 1:
+                    self.game.level.score += 1
+                    self.game.level.max_enemies += 1
+                    pygame.mixer.Sound.play(self.enemy_die_sound)
+                    enm.kill()
+                elif self.direc == 'left' and (self.rect.x - enm.rect.x) <= 55 and (self.rect.x - enm.rect.x) >= 1:
+                    self.game.level.score += 1
+                    self.game.level.max_enemies += 1
+                    pygame.mixer.Sound.play(self.enemy_die_sound)
+                    enm.kill()
+    
     def collisionDetection(self):
 
         keys = pygame.key.get_pressed()
@@ -183,42 +240,17 @@ class Player(pygame.sprite.Sprite):  # Creates a Player Sprite
         #Store all the keys pressed
         keys = pygame.key.get_pressed()
         
+        #Verify if attack ended , if not execute the function
+        
+        if self.counter_attack != -1:
+            
+            self.sword_attack()
+        
         #If Space bar pressed
         if keys[pygame.K_SPACE]:
-            
-            pygame.mixer.Sound.play(self.sword_sound)
-
-            # Animation of player attack
-            if self.direc == 'left':
-                for i in range(0,8):
-                    self.image = pygame.image.load(
-                    PlayerSprites.PLAYER_IMAGE_ATTACK_LEFT[i]).convert_alpha()
-
-                    self.game.draw()
-                    pygame.time.delay(50)
-            else:
-                for i in range(0,8):
-                    self.image = pygame.image.load(
-                    PlayerSprites.PLAYER_IMAGE_ATTACK_RIGHT[i]).convert_alpha()
-
-                    self.game.draw()
-                    pygame.time.delay(50)
+            self.counter_attack = 0
+            self.sword_attack()
         
-            # Verify if player hit an enemy with the sword attack, if yes the enemy will be killed
-            if self.pos.y == PlatformSettings.HEIGHT - 71:
-                for enm in self.game.level.enemies:
-                    if self.direc == 'right' and (enm.rect.x - self.rect.x) <= 55 and (enm.rect.x - self.rect.x) >= 1:
-                        self.game.level.score += 1
-                        self.game.level.max_enemies += 1
-                        pygame.mixer.Sound.play(self.enemy_die_sound)
-                        enm.kill()
-                    elif self.direc == 'left' and (self.rect.x - enm.rect.x) <= 55 and (self.rect.x - enm.rect.x) >= 1:
-                        self.game.level.score += 1
-                        self.game.level.max_enemies += 1
-                        pygame.mixer.Sound.play(self.enemy_die_sound)
-                        enm.kill()
-        
-
         #If left key pressed
         if keys[pygame.K_LEFT]:
 

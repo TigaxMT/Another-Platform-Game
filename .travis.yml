@@ -3,6 +3,6 @@ python:
     - "3.6"
     - "3.6-dev"
 before_install:
-    - pip3 install -r requirements.txt
+    - pip3 install -r travis_requirements.txt
 script:
     - python3 setup.py build
