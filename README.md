@@ -27,6 +27,11 @@ A Platform Game written in Python with PyGame
 *  [x] Improve the credits screen;
 *  [ ] Add a animations to the credits and menu screen;
 
+## Download Compiled Version
+
+If want an unzip, 2 click and enjoy the game method, you can download the Windows or Linux version.
+Here: https://github.com/TigaxMT/Sword-N-Jump/releases
+
 ## Warning before compiling
 
 For the game running well, you need to use python3.6 or higher
